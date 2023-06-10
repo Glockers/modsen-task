@@ -1,10 +1,11 @@
-import express, { Request, Response } from 'express';
+import express, { Application, Request, Response } from 'express';
 import 'dotenv/config';
 import bodyParser from 'body-parser';
-import { checkDatabaseConnection } from './config/db.config';
-import logger from './utils/logger';
+import logger from './api/utils/logger';
+import dbInit from './db/init';
 
-const app = express();
+dbInit();
+const app: Application = express();
 const PORT = process.env.API_PORT || 5000;
 
 app.use(bodyParser.json());
@@ -15,6 +16,5 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.listen(PORT, () => {
-  checkDatabaseConnection();
   logger.info(`[server]: Server is running at ${process.env.API_HOST}:${PORT}`);
 });
