@@ -1,6 +1,15 @@
 import log4js from 'log4js';
+import path from 'path';
+import { createConfigLogger } from '../../config/log4js.config';
 
-const logger = log4js.getLogger();
-logger.level = process.env.LOG_LEVEL as string;
+const config = createConfigLogger();
 
-export default logger;
+const createLogger = (context: string) => {
+  log4js.configure(config.configLogger);
+  const logger = log4js.getLogger();
+  logger.addContext(config.contextName, path.relative('src', context));
+  logger.level = config.contextName;
+  return logger;
+};
+
+export default createLogger;
