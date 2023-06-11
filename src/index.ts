@@ -1,13 +1,18 @@
-import express from 'express';
+import express, { Application } from 'express';
 import 'dotenv/config';
+import bodyParser from 'body-parser';
+import logger from './api/utils/logger';
+import dbInit from './db/init';
+import routes from './api/routes';
 
-const app = express();
-const PORT = process.env.PORT || 5000;
+dbInit();
+const app: Application = express();
+const PORT = process.env.API_PORT || 5000;
 
-app.get('/', (req: any, res: any) => {
-    res.send('Express + TypeScript Server');
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/api/v1', routes);
 
 app.listen(PORT, () => {
-    console.log(`[server]: Server is running at ${process.env.HOST}:${PORT}`)
+  logger.info(`[server]: Server is running at ${process.env.API_HOST}:${PORT}`);
 });
