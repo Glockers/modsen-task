@@ -1,4 +1,6 @@
 import { Router, Request, Response } from 'express';
+import * as MeetupController from '../controllers/meetup.controller';
+import { createMeetupValidationMiddleware } from '../middleware/meetup.middleware';
 
 const meetupRouter = Router();
 
@@ -11,9 +13,7 @@ meetupRouter.get('/:id', async (req: Request, res: Response) => {
   res.send(`One meetup ${id}`);
 });
 
-meetupRouter.post('/', async (req: Request, res: Response) => {
-  res.send('add meetup');
-});
+meetupRouter.post('/', createMeetupValidationMiddleware, MeetupController.create);
 
 meetupRouter.put('/:id', async (req: Request, res: Response) => {
   const id = Number(req.params.id);
