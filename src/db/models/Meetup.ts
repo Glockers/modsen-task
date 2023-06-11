@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelizeConnection } from '../config/db.config';
 
-interface IMeetupAttributes {
+export interface IMeetupAttributes {
   id: number;
   title: string;
   description?: string;
@@ -10,7 +10,6 @@ interface IMeetupAttributes {
   datetime: Date;
   createdAt?: Date;
   updatedAt?: Date;
-  deletedAt?: Date;
 }
 
 class Meetup extends Model<IMeetupAttributes, any> implements IMeetupAttributes {
@@ -24,7 +23,6 @@ class Meetup extends Model<IMeetupAttributes, any> implements IMeetupAttributes 
   // timestamps
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
-  public readonly deletedAt!: Date;
 }
 
 Meetup.init(
@@ -54,8 +52,7 @@ Meetup.init(
   },
   {
     sequelize: sequelizeConnection,
-    modelName: 'Meetup',
-    paranoid: true
+    modelName: 'Meetup'
   }
 );
 
