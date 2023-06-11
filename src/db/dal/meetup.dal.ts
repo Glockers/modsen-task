@@ -1,13 +1,9 @@
+import { IDatabaseResponse } from '../interface/databaseResponse.interface';
 import Meetup, { IMeetupAttributes } from '../models/Meetup';
 
-interface IDatabaseResponse<T> {
-  data: string | T,
-  status: number
-}
-
-export const createMeetup = async (payload: any): Promise<any> => {
+export const createMeetup = async (payload: any): Promise<IDatabaseResponse<IMeetupAttributes>> => {
   const meetup = await Meetup.create(payload);
-  return meetup;
+  return { data: meetup, status: 200 };
 };
 
 export const deleteMeetupById = async (meetupId: number): Promise<IDatabaseResponse<string>> => {
@@ -25,7 +21,7 @@ export const deleteMeetupById = async (meetupId: number): Promise<IDatabaseRespo
   }
 };
 
-export const getMeetup = async (meetupId: number): Promise<IDatabaseResponse<IMeetupAttributes | string>> => {
+export const getMeetup = async (meetupId: number): Promise<IDatabaseResponse<IMeetupAttributes>> => {
   try {
     const meetup = await Meetup.findByPk(meetupId);
 

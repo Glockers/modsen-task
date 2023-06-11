@@ -6,7 +6,7 @@ import * as DBService from '../../db/services/meetup.service';
 export const create = async (req: TValidatePayload, res: Response) => {
   const validatedPayload = req.validatedPayload;
   const result = await DBService.create(validatedPayload);
-  res.status(200).send(result);
+  res.status(result.status).send(result);
 };
 
 export const deleteById = async (req: Request, res: Response) => {
