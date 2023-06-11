@@ -1,0 +1,6 @@
+{
+  "code-runner.executorMap": {
+    "typescript": "npm run server:watch"
+  },
+  "code-runner.runInTerminal": true
+}
