@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "e5f74193-08b7-45f5-b647-5130eb999873",
+		"name": "Meetup_CRUD_Operation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get all meetup",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/meetup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"meetup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get meetup by ID",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "add meetup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"max\",\r\n    \"description\": \"hello max\",\r\n    \"location\": \"Hamarnika\",\r\n    \"tags\": [\"job\", \"work\"],\r\n    \"datetime\":\"2023-05-25T12:34:56Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/meetup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"meetup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete meetup",
+			"request": {
+				"method": "DELETE",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Edit meetup by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    title: \"test\",\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/meetup/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"meetup",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
