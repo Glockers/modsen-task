@@ -26,6 +26,14 @@ export const createMeetupSchema = Joi.object<TCreateMeetupDTO>({
   tags: Joi.array().items(Joi.string()).required()
 });
 
+export const updateMeetupSchema = Joi.object<Partial<TCreateMeetupDTO>>({
+  title: Joi.string(),
+  description: Joi.string(),
+  location: Joi.string(),
+  datetime: Joi.date(),
+  tags: Joi.array().items(Joi.string())
+});
+
 export const filterMeetupsSchema = Joi.object<TFilterMeetupsDTO>({
   search: Joi.string(),
   filter: Joi.array().items(Joi.string()),

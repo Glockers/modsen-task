@@ -1,4 +1,4 @@
-import { createMeetup, deleteMeetupById, getAllMeetup, getMeetup } from '../dal/meetup.dal';
+import { createMeetup, deleteMeetupById, getAllMeetup, getMeetup, updateMeetup } from '../dal/meetup.dal';
 import { IDatabaseResponse } from '../interface/databaseResponse.interface';
 import { IMeetupAttributes } from '../models';
 
@@ -60,6 +60,21 @@ export const getAll = async (): Promise<IDatabaseResponse<any>> => {
     return {
       data: 'Exception on server',
       status: 500
+    };
+  }
+};
+
+export const update = async (meetupId: number, payload: any): Promise<IDatabaseResponse<string>> => {
+  try {
+    await updateMeetup(meetupId, payload);
+    return {
+      data: 'Пользователь обновлен',
+      status: 200
+    };
+  } catch (ex) {
+    return {
+      data: 'Пользователь с таким ID не найден',
+      status: 404
     };
   }
 };

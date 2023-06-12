@@ -1,8 +1,8 @@
 import { Response, Request } from 'express';
-import { TValidatePayload } from '../middleware/meetup.middleware';
+import { TValidatePayloadCreate, TValidatePayloadUpdate } from '../middleware/meetup.middleware';
 import * as DBService from '../../db/services/meetup.service';
 
-export const create = async (req: TValidatePayload, res: Response) => {
+export const create = async (req: TValidatePayloadCreate, res: Response) => {
   const validatedPayload = req.validatedPayload;
   const result = await DBService.create(validatedPayload);
   res.status(result.status).send(result);
@@ -14,8 +14,11 @@ export const deleteById = async (req: Request, res: Response) => {
   res.status(result.status).send(result);
 };
 
-export const updateById = async (req: Request, res: Response) => {
-
+export const updateById = async (req: TValidatePayloadUpdate, res: Response) => {
+  const id = Number(req.params.id);
+  const validatedPayload = req.validatedPayload;
+  const result = await DBService.update(id, validatedPayload);
+  res.status(result.status).send(result);
 };
 
 export const getOneById = async (req: Request, res: Response) => {

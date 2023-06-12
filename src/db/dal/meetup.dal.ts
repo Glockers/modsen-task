@@ -15,3 +15,12 @@ export const getMeetup = async (meetupId: number) => {
 export const getAllMeetup = async () => {
   return Meetup.findAll();
 };
+
+export const updateMeetup = async (meetupId: number, payload: any) => {
+  const meetup = await Meetup.findByPk(meetupId);
+  if (!meetup) {
+    throw new Error('meetup not found');
+  }
+  const updatedMeetup = await meetup.update(payload);
+  return updatedMeetup;
+};
