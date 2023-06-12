@@ -44,3 +44,7 @@ export const getMeetup = async (meetupId: number): Promise<IDatabaseResponse<IMe
     };
   }
 };
+
+export const getAllMeetup = async () => {
+  return Meetup.findAll();
+};

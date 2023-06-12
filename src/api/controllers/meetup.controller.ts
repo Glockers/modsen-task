@@ -1,5 +1,4 @@
 import { Response, Request } from 'express';
-import { TFilterMeetupsDTO, TUpdateMeetupDTO } from '../dto/meetup.dto';
 import { TValidatePayload } from '../middleware/meetup.middleware';
 import * as DBService from '../../db/services/meetup.service';
 
@@ -15,7 +14,7 @@ export const deleteById = async (req: Request, res: Response) => {
   res.status(result.status).send(result);
 };
 
-export const updateById = async (id: number, payload: TUpdateMeetupDTO) => {
+export const updateById = async (req: Request, res: Response) => {
 
 };
 
@@ -25,6 +24,7 @@ export const getOneById = async (req: Request, res: Response) => {
   res.status(result.status).send(result.data);
 };
 
-export const getAll = async (filter: TFilterMeetupsDTO) => {
-
+export const getAll = async (req: Request, res: Response) => {
+  const meetupsResult = await DBService.getAll();
+  res.status(meetupsResult.status).send(meetupsResult);
 };
