@@ -1,10 +1,11 @@
 import express, { Application } from 'express';
 import 'dotenv/config';
 import bodyParser from 'body-parser';
-import logger from './api/utils/logger';
 import dbInit from './db/init';
 import routes from './api/routes';
+import createLogger from './api/utils/logger';
 
+const logger = createLogger(__filename);
 dbInit();
 const app: Application = express();
 const PORT = process.env.API_PORT || 5000;

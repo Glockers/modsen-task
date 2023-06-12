@@ -1,28 +1,17 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
+import * as MeetupController from '../controllers/meetup.controller';
+import { createMeetupValidationMiddleware, updateMeetupValidationMiddleware } from '../middleware/meetup.middleware';
 
 const meetupRouter = Router();
 
-meetupRouter.get('/', async (req: Request, res: Response) => {
-  res.send('All meetup');
-});
+meetupRouter.get('/', MeetupController.getAll);
 
-meetupRouter.get('/:id', async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
-  res.send(`One meetup ${id}`);
-});
+meetupRouter.get('/:id', MeetupController.getOneById);
 
-meetupRouter.post('/', async (req: Request, res: Response) => {
-  res.send('add meetup');
-});
+meetupRouter.post('/', createMeetupValidationMiddleware, MeetupController.create);
 
-meetupRouter.put('/:id', async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
-  res.send('edit meetup: ' + id);
-});
+meetupRouter.put('/:id', updateMeetupValidationMiddleware, MeetupController.updateById);
 
-meetupRouter.delete('/:id', async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
-  res.send('delete meetup: ' + id);
-});
+meetupRouter.delete('/:id', MeetupController.deleteById);
 
 export default meetupRouter;
