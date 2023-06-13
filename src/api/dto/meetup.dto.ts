@@ -14,7 +14,7 @@ export type TFilterMeetupsDTO = {
   search?: string;
   filter?: string[];
   sortBy?: string;
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: 'ASC' | 'DESC';
   page?: number;
   limit?: number;
 }

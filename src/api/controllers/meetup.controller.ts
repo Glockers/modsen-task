@@ -30,7 +30,6 @@ export const getOneById = async (req: Request, res: Response) => {
 
 export const getAll = async (req: Request, res: Response) => {
   const params: TFilterMeetupsDTO = req.query;
-  console.log(params);
-  const meetupsResult = await DBService.getAll();
+  const meetupsResult = await DBService.getAll(params);
   res.status(meetupsResult.status).send(meetupsResult);
 };
