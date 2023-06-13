@@ -16,7 +16,6 @@ export const getMeetup = async (meetupId: number) => {
 
 export const getAllMeetup = async (params: TFilterMeetupsDTO) => {
   const queryOptions: any = {};
-  console.log(params);
 
   if (params.filter) {
     queryOptions.where = {
