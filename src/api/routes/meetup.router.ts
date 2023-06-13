@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as MeetupController from '../controllers/meetup.controller';
-import { createMeetupValidationMiddleware, updateMeetupValidationMiddleware } from '../middleware/meetup.middleware';
+import { createValidationMiddleware, updateValidationMiddleware } from '../middleware/meetup.middleware';
 
 const meetupRouter = Router();
 
@@ -8,9 +8,9 @@ meetupRouter.get('/', MeetupController.getAll);
 
 meetupRouter.get('/:id', MeetupController.getOneById);
 
-meetupRouter.post('/', createMeetupValidationMiddleware, MeetupController.create);
+meetupRouter.post('/', createValidationMiddleware(), MeetupController.create);
 
-meetupRouter.put('/:id', updateMeetupValidationMiddleware, MeetupController.updateById);
+meetupRouter.put('/:id', updateValidationMiddleware(), MeetupController.updateById);
 
 meetupRouter.delete('/:id', MeetupController.deleteById);
 

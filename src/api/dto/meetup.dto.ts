@@ -13,7 +13,8 @@ export type TUpdateMeetupDTO = TCreateMeetupDTO
 export type TFilterMeetupsDTO = {
   search?: string;
   filter?: string[];
-  sort?: 'title' | 'datetime';
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
   page?: number;
   limit?: number;
 }
@@ -37,7 +38,6 @@ export const updateMeetupSchema = Joi.object<Partial<TCreateMeetupDTO>>({
 export const filterMeetupsSchema = Joi.object<TFilterMeetupsDTO>({
   search: Joi.string(),
   filter: Joi.array().items(Joi.string()),
-  sort: Joi.string().valid('title', 'datetime'),
   page: Joi.number().integer().min(1),
   limit: Joi.number().integer().min(1)
 });
