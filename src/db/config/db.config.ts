@@ -1,18 +1,10 @@
-import { Dialect, Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize';
+import * as pg from 'pg';
 
-const dbName = process.env.POSTGRES_DB as string;
-const dbUser = process.env.POSTGRES_USER as string;
-const dbHost = process.env.POSTGRES_HOST;
-const dbDriver = process.env.POSTGRES_DIALECT as Dialect;
-const dbPassword = process.env.POSTGRES_PASSWORD;
-const dbPort = Number(process.env.POSTGRES_PORT);
-const isLogging = process.env.LOG_DB === 'true';
+const URL = String(process.env.POSTGRES_URL);
 
-export const sequelizeConnection = new Sequelize(dbName, dbUser, dbPassword, {
-  host: dbHost,
-  dialect: dbDriver,
-  port: dbPort || 5432,
-  logging: isLogging
+export const sequelizeConnection = new Sequelize(URL, {
+  dialectModule: pg
 });
 
 export async function checkDatabaseConnection() {
