@@ -5,7 +5,7 @@ interface UserPayload {
   username: string;
 }
 // Конфигурация JWT-токенов
-const jwtSecret = 'test_key';
+const jwtSecret = process.env.SECRET_JWT || 'secret';
 const jwtOptions: StrategyOptions = {
   secretOrKey: jwtSecret,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
@@ -22,7 +22,7 @@ export const accessJWTStrategy = new JwtStrategy(jwtOptions, (payload: UserPaylo
 
 // Генерация Access и Refresh токенов
 export function generateTokens(user: UserPayload) {
-  const accessToken = jwt.sign({ username: user.username }, jwtSecret, { expiresIn: '15m' });
+  const accessToken = jwt.sign({ username: user.username }, jwtSecret, { expiresIn: '1m' });
   const refreshToken = jwt.sign({ username: user.username }, jwtSecret, { expiresIn: '40m' });
   return { accessToken, refreshToken };
 }
