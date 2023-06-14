@@ -1,3 +1,4 @@
+import { TFilterMeetupsDTO } from '../../api/dto/meetup.dto';
 import { createMeetup, deleteMeetupById, getAllMeetup, getMeetup, updateMeetup } from '../dal/meetup.dal';
 import { IDatabaseResponse } from '../interface/databaseResponse.interface';
 import { IMeetupAttributes } from '../models';
@@ -49,9 +50,9 @@ export const getOneById = async (id: number): Promise<IDatabaseResponse<IMeetupA
   }
 };
 
-export const getAll = async (): Promise<IDatabaseResponse<any>> => {
+export const getAll = async (params: TFilterMeetupsDTO): Promise<IDatabaseResponse<any>> => {
   try {
-    const res = await getAllMeetup();
+    const res = await getAllMeetup(params);
     return {
       data: res,
       status: 200
