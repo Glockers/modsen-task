@@ -7,12 +7,14 @@ import createLogger from './api/utils/logger';
 import passport from 'passport';
 import { accessJWTStrategy } from './config/passport.config';
 import { authenticateAccess } from './api/middleware/authenticateAccess.middleware';
+import cors from 'cors';
 
 const logger = createLogger(__filename);
 dbInit();
+
 const app: Application = express();
 const PORT = process.env.API_PORT || 5000;
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
