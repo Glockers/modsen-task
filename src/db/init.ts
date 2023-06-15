@@ -1,12 +1,15 @@
 import { checkDatabaseConnection } from './config/db.config';
 import Meetup from './models/Meetup';
+import MeetupRegistration from './models/MeetupRegistration';
 import User from './models/User';
 
-const isDev = true;
+const isGenerate = Boolean(process.env.GENERATE_TABLE);
 
 const dbInit = () => Promise.all([
-  isDev ? checkDatabaseConnection() : undefined,
-  Meetup.sync({ alter: isDev }),
-  User.sync({ alter: isDev })
+  checkDatabaseConnection(),
+  Meetup.sync({ alter: isGenerate }),
+  User.sync({ alter: isGenerate }),
+  MeetupRegistration.sync({ alter: isGenerate })
 ]);
+
 export default dbInit;

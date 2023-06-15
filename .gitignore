@@ -4,3 +4,4 @@ node_modules
 /logs
 .env
 .eslintcache
+.env.production
