@@ -1,4 +1,4 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelizeConnection } from '../config/db.config';
 import User from './User';
 import Meetup from './Meetup';
@@ -8,7 +8,10 @@ export interface IMeetupRegistrationAttributes {
   registrationDate: Date;
 }
 
-class MeetupRegistration extends Model<IMeetupRegistrationAttributes, any> implements IMeetupRegistrationAttributes {
+export interface IMeetupRegistrationInput extends Optional<IMeetupRegistrationAttributes, 'id'> { }
+export interface IMeetupRegistrationOutput extends IMeetupRegistrationAttributes { }
+
+class MeetupRegistration extends Model<IMeetupRegistrationAttributes, IMeetupRegistrationInput> implements IMeetupRegistrationAttributes {
   public id!: number;
   public registrationDate!: Date;
 }
@@ -28,12 +31,6 @@ MeetupRegistration.init(
   {
     sequelize: sequelizeConnection,
     modelName: 'MeetupRegistration'
-  }
-);
-
-MeetupRegistration.beforeCreate(
-  async (registration) => {
-    registration.registrationDate = new Date();
   }
 );
 

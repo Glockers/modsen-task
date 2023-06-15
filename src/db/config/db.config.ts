@@ -5,14 +5,14 @@ const dbUser = String(process.env.POSTGRESS_USER);
 const dbHost = process.env.POSTGRESS_HOST;
 const dbPassword = String(process.env.POSTGRESS_PASSWORD);
 const isLogging = process.env.LOG_DB === 'true';
+const isProduction = process.env.NODE_ENV === 'production';
 
 export const sequelizeConnection = new Sequelize(dbName, dbUser, dbPassword, {
   host: dbHost,
   dialect: 'postgres',
   dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
+    ssl: isProduction && {
+      require: true
     }
   },
   logging: isLogging
