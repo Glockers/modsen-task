@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelizeConnection } from '../config/db.config';
+import { sequelizeConnection } from '../../../db/config/db.config';
 
 export interface IMeetupAttributes {
   id: number;

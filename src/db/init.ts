@@ -1,7 +1,7 @@
 import { checkDatabaseConnection } from './config/db.config';
-import Meetup from './models/Meetup';
-import MeetupRegistration from './models/MeetupRegistration';
-import User from './models/User';
+import Meetup from '../models/meetup/entities/meetup.entity';
+import MeetupRegistration from '../models/meetupRegistation/entities/MeetupRegistration.entity';
+import User from '../models/user/entities/User.entity';
 
 const isGenerate = Boolean(process.env.GENERATE_TABLE);
 

@@ -1,6 +1,6 @@
-import { BelongsToManyAddAssociationMixin, DataTypes, Model } from 'sequelize';
-import { sequelizeConnection } from '../config';
-import Meetup from './Meetup';
+import { DataTypes, HasManyAddAssociationMixin, Model } from 'sequelize';
+import { sequelizeConnection } from '../../../db/config';
+import Meetup from '../../meetup/entities/meetup.entity';
 
 export interface IUserAttributes {
   id: number;
@@ -9,16 +9,16 @@ export interface IUserAttributes {
   role: string;
 }
 
-export type IUserCreate = Omit<IUserAttributes, 'id'>
+export type IUserInput = Omit<IUserAttributes, 'id'>
 
 export type IAuthCredentials = Omit<IUserAttributes, 'id' | 'role'>
 
-class User extends Model<IUserAttributes, any> implements IUserAttributes {
+class User extends Model<IUserAttributes, IUserInput> implements IUserAttributes {
   public id!: number;
   public login!: string;
   public password!: string;
   public role!: string;
-  public addMeetup!: BelongsToManyAddAssociationMixin<Meetup, any>;
+  public addMeetup!: HasManyAddAssociationMixin<Meetup, number>;
 }
 
 User.init(

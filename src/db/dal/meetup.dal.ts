@@ -1,5 +1,5 @@
 import { Op } from 'sequelize';
-import Meetup from '../models/Meetup';
+import Meetup from '../../models/meetup/entities/meetup.entity';
 import { TFilterMeetupsDTO } from '../../api/dto/meetup.dto';
 
 export const createMeetup = async (payload: any) => {

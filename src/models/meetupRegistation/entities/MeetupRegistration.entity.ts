@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import { sequelizeConnection } from '../config/db.config';
-import User from './User';
-import Meetup from './Meetup';
+import { sequelizeConnection } from '../../../db/config/db.config';
+import User from '../../user/entities/User.entity';
+import Meetup from '../../meetup/entities/meetup.entity';
 
 export interface IMeetupRegistrationAttributes {
   id: number;

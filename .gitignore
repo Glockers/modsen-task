@@ -6,3 +6,5 @@ node_modules
 .eslintcache
 .env.production
 .env.development
+.vscode
+/dist

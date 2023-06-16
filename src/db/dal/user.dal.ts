@@ -1,7 +1,7 @@
 import { Role } from '../interface/role';
-import User, { IAuthCredentials, IUserAttributes, IUserCreate } from '../models/User';
+import User, { IAuthCredentials, IUserAttributes, IUserInput } from '../../models/user/entities/User.entity';
 
-export const createUser = async (user: IUserCreate) => {
+export const createUser = async (user: IUserInput) => {
   User.beforeCreate(
     async (user) => {
       user.role = Role.USER;
