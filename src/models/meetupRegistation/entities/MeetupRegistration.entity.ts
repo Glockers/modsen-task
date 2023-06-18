@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import { sequelizeConnection } from '../../../db/config/db.config';
+import { sequelizeConnection } from '../../../config/db.config';
 import User from '../../user/entities/User.entity';
 import Meetup from '../../meetup/entities/meetup.entity';
 

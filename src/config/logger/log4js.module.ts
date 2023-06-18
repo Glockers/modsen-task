@@ -1,6 +1,5 @@
 
-const loggingLevel = process.env.LOG_LEVEL || 'debug';
-const contextName = 'context';
+
 
 const configLogger = {
   appenders: {

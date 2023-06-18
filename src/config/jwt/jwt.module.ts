@@ -5,7 +5,7 @@ interface UserPayload {
   username: string;
 }
 // Конфигурация JWT-токенов
-const jwtSecret = process.env.SECRET_JWT || 'secret';
+
 const jwtOptions: StrategyOptions = {
   secretOrKey: jwtSecret,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()

@@ -1,6 +1,6 @@
 import log4js from 'log4js';
 import path from 'path';
-import { createConfigLogger } from '../../config/log4js.config';
+import { createConfigLogger } from '../../config/logger/log4js.module';
 
 const config = createConfigLogger();
 

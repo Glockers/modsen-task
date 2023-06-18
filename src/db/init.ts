@@ -1,4 +1,4 @@
-import { checkDatabaseConnection } from './config/db.config';
+import { checkDatabaseConnection } from '../config/db.config';
 import Meetup from '../models/meetup/entities/meetup.entity';
 import MeetupRegistration from '../models/meetupRegistation/entities/MeetupRegistration.entity';
 import User from '../models/user/entities/User.entity';

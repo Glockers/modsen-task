@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { TValidatePayload } from '../middleware/validateDTO.middlware';
 import { IUserDTO, TCreateUserDTO } from '../dto/user.dto';
-import { generateTokens } from '../../config/passport.config';
+import { generateTokens } from '../../config/jwt/jwt.module';
 import jwt from 'jsonwebtoken';
 
 const jwtSecret = process.env.SECRET_JWT || 'secret';
