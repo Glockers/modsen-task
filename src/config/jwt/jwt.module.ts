@@ -1,16 +1,17 @@
 import { Strategy as JwtStrategy, ExtractJwt, VerifiedCallback, StrategyOptions } from 'passport-jwt';
 import jwt from 'jsonwebtoken';
+import jwtConfig from './jwt.config';
 
 interface UserPayload {
   username: string;
 }
-// Конфигурация JWT-токенов
 
 const jwtOptions: StrategyOptions = {
-  secretOrKey: jwtSecret,
+  secretOrKey: jwtConfig.JWT_ACCESS_SECRET,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
 };
 
+// TODO
 export const accessJWTStrategy = new JwtStrategy(jwtOptions, (payload: UserPayload, done: VerifiedCallback) => {
   const test = 1;
   if (test > 0) {
@@ -20,9 +21,8 @@ export const accessJWTStrategy = new JwtStrategy(jwtOptions, (payload: UserPaylo
   }
 });
 
-// Генерация Access и Refresh токенов
 export function generateTokens(user: UserPayload) {
-  const accessToken = jwt.sign({ username: user.username }, jwtSecret, { expiresIn: '1m' });
-  const refreshToken = jwt.sign({ username: user.username }, jwtSecret, { expiresIn: '40m' });
+  const accessToken = jwt.sign({ username: user.username }, jwtConfig.JWT_ACCESS_SECRET, { expiresIn: jwtConfig.ACCESS_TOKEN_EXPIRATION });
+  const refreshToken = jwt.sign({ username: user.username }, jwtConfig.JWT_ACCESS_SECRET, { expiresIn: jwtConfig.REFRESH_TOKEN_EXPIRATION });
   return { accessToken, refreshToken };
 }

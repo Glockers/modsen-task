@@ -1,14 +1,15 @@
-import Joi from '@hapi/joi';
+import Joi from 'joi';
+import validateConfig from '../../common/utils/validateConfig';
 
-const validationSchema = Joi.object({
-  LEVEL: Joi.string().valid('debug', 'error', 'info'),
-  LOGGER_CONTEXT_NAME: Joi.string().default('context'),
-});
+interface ILoggerConfig {
+  LOGGER_LEVEL: string,
+  LOGGER_CONTEXT_NAME: string
+}
 
+const validationSchema = Joi.object<ILoggerConfig>({
+  LOGGER_LEVEL: Joi.string().valid('debug', 'error', 'info').required(),
+  LOGGER_CONTEXT_NAME: Joi.string().default('context').required()
+}).unknown();
 
-const loggerConfig = validationSchema.validate({
-    LEVEL: process.env.LOG_LEVEL,
-    LOGGER_CONTEXT_NAME: process.env.LOGGER_CONTEXT_NAME
-})
-
+const loggerConfig = validateConfig<ILoggerConfig>(validationSchema);
 export default loggerConfig;

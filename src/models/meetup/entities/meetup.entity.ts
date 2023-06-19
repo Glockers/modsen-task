@@ -1,59 +1,31 @@
-import { DataTypes, Model } from 'sequelize';
-import { sequelizeConnection } from '../../../config/db.config';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { IMeetupAttributes } from '../interfaces/meetup.interface';
 
-export interface IMeetupAttributes {
-  id: number;
-  title: string;
-  description?: string;
-  tags: string[];
-  location: string;
-  datetime: Date;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
-class Meetup extends Model<IMeetupAttributes, any> implements IMeetupAttributes {
+@Entity('meetups')
+export class Meetup implements IMeetupAttributes {
+  @PrimaryGeneratedColumn()
   public id!: number;
+
+  @Column({ type: 'varchar' })
   public title!: string;
+
+  @Column({ type: 'text', nullable: true })
   public description?: string;
+
+  @Column({ type: 'varchar' })
   public location!: string;
-  public datetime!: Date;
+
+  @Column({
+    type: 'timestamptz'
+  })
+  public date!: Date;
+
+  @Column('varchar', { array: true, default: () => 'ARRAY[]::varchar[]' })
   public tags!: string[];
 
-  // timestamps
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  @CreateDateColumn()
+  public createdAt!: Date;
+
+  @UpdateDateColumn()
+  public updatedAt!: Date;
 }
-
-Meetup.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    description: {
-      type: DataTypes.TEXT
-    },
-    tags: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      defaultValue: []
-    },
-    datetime: {
-      type: DataTypes.DATE
-    },
-    location: {
-      type: DataTypes.STRING
-    }
-  },
-  {
-    sequelize: sequelizeConnection,
-    modelName: 'Meetup'
-  }
-);
-
-export default Meetup;

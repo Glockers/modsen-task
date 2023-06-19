@@ -1,20 +1,25 @@
-import Joi from '@hapi/joi';
+import Joi from 'joi';
+import validateConfig from '../common/utils/validateConfig';
 
-const validationSchema = Joi.object({
-  POSTGRESS_NAME: Joi.string(),
-  POSTGRESS_HOST: Joi.string().default('http://localhost'),
-  POSTGRESS_USER: Joi.string(),
-  POSTGRESS_PASSWORD: Joi.string(),
-  LOGGING_DATABSE: Joi.boolean().default(false),
-  POSTGRESS_DIALECT: Joi.valid('postgres')
-});
+interface IPostgreConfig {
+  TYPEORM_HOST: string,
+  TYPEORM_USERNAME: string,
+  TYPEORM_PASSWORD: string,
+  TYPEORM_CONNECTION: 'postgres' | 'mysql';
+  TYPEORM_DATABASE: string,
+  TYPEORM_SYNCHRONIZE: boolean,
+  TYPEORM_LOGGING: boolean,
+}
 
-const dbConfig = validationSchema.validate({
-    POSTGRESS_NAME: process.env.POSTGRESS_DATABASE,
-    POSTGRESS_HOST: process.env.POSTGRESS_HOST,
-    POSTGRESS_PASSWORD: process.env.POSTGRESS_PASSWORD,
-    POSTGRESS_USER: process.env.POSTGRESS_USER,
-    LOGGING_DATABSE: process.env.LOG_DB,
+const validationSchema = Joi.object<IPostgreConfig>({
+  TYPEORM_DATABASE: Joi.string().required(),
+  TYPEORM_HOST: Joi.string().default('http://localhost').required(),
+  TYPEORM_USERNAME: Joi.string().required(),
+  TYPEORM_PASSWORD: Joi.string().required(),
+  TYPEORM_LOGGING: Joi.boolean().default(false).required(),
+  TYPEORM_SYNCHRONIZE: Joi.boolean().default(true).required(),
+  TYPEORM_CONNECTION: Joi.string().default('postgres').required()
+}).unknown();
 
-})
-export default dbConfig;
+const typeormConfig = validateConfig<IPostgreConfig>(validationSchema);
+export default typeormConfig;

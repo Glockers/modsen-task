@@ -1,17 +1,19 @@
-import Joi from '@hapi/joi';
 
-const validationSchema = Joi.object({
-  APP_ENV: Joi.string()
+import Joi from 'joi';
+import validateConfig from '../common/utils/validateConfig';
+
+interface IAppConfig {
+  APP_NODE_ENV: string,
+  APP_HOST: string,
+  APP_PORT: number
+}
+
+const validationSchema = Joi.object<IAppConfig>({
+  APP_NODE_ENV: Joi.string()
     .valid('development', 'production', 'test')
-    .default('development'),
-  APP_URL: Joi.string().default('http://localhost'),
-  APP_PORT: Joi.number().default(8000)
-});
+    .default('development').required(),
+  APP_HOST: Joi.string().default('http://localhost').required(),
+  APP_PORT: Joi.number().default(8000).required()
+}).unknown();
 
-const appConfig = validationSchema.validate({
-  APP_PORT: process.env.PORT,
-  APP_URL: process.env.API_HOST,
-  APP_ENV: process.env.NODE_ENV,
-});
-
-export default appConfig;
+export default validateConfig<IAppConfig>(validationSchema);

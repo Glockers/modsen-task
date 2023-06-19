@@ -1,5 +1,4 @@
-
-
+import loggerConfig from './log4js.config';
 
 const configLogger = {
   appenders: {
@@ -7,17 +6,17 @@ const configLogger = {
       type: 'stdout',
       layout: {
         type: 'pattern',
-        pattern: `%[[%d{dd/MM/yy hh:mm:ss} %X{${contextName}}] [%p]%] %m`
+        pattern: `%[[%d{dd/MM/yy hh:mm:ss} %X{${loggerConfig.LOGGER_CONTEXT_NAME}}] [%p]%] %m`
       }
     }
   },
-  categories: { default: { appenders: ['out'], level: loggingLevel } }
+  categories: { default: { appenders: ['out'], level: loggerConfig.LOGGER_LEVEL } }
 };
 
 export const createConfigLogger = () => {
   return {
-    loggingLevel,
-    contextName,
+    // loggingLevel,
+    // contextName,
     configLogger
   };
 };
