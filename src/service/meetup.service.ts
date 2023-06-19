@@ -13,13 +13,8 @@ export const create = async (payload: any): Promise<IDatabaseResponse<IMeetupAtt
 
 export const deleteById = async (id: number): Promise<IDatabaseResponse<string>> => {
   try {
-    const selecteMeetup = await deleteMeetupById(id);
-    if (selecteMeetup) {
-      await selecteMeetup.destroy();
-      return { data: 'meetup удален!', status: 200 };
-    } else {
-      return { data: 'meetup не найден', status: 404 };
-    }
+    await deleteMeetupById(id);
+    return { data: 'meetup удален!', status: 200 };
   } catch (error) {
     console.error('Ошибка при удалении meetup:', error);
     return { data: 'meetup не найден', status: 500 };
@@ -32,7 +27,7 @@ export const getOneById = async (id: number): Promise<IDatabaseResponse<IMeetupA
     if (meetup) {
       return {
         status: 200,
-        data: meetup.toJSON()
+        data: meetup
       };
     } else {
       return {
