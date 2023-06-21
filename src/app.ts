@@ -2,11 +2,11 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import express, { Application } from 'express';
 import initDatabases from './provider/init';
-import routes from './routes';
+import routes from './common/routes';
 import cookieParser from 'cookie-parser';
-import passport from './service/sesssion.service';
-import { authenticate } from './middleware/auth.middleware';
-import { hasRole } from './middleware/hasRole.middleware';
+import passport from './authentication/sesssion.service';
+import { authenticate } from './common/middleware/auth.middleware';
+import { hasRole } from './common/middleware/hasRole.middleware';
 
 const app: Application = express();
 initDatabases();

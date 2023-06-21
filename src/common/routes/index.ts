@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import meetupRouter from './meetup.router';
-import authRouter from './auth.router';
+import meetupRouter from '../../models/meetup/meetup.router';
+import authRouter from '../../models/user/user.router';
 
 const router = Router();
 

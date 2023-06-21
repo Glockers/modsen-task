@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import * as MeetupController from '../controllers/meetup.controller';
-import { createValidationMiddleware, updateValidationMiddleware } from '../middleware/meetup.middleware';
+import * as MeetupController from './meetup.controller';
+import { createValidationMiddleware, updateValidationMiddleware } from '../../common/middleware/meetup.middleware';
 
 const meetupRouter = Router();
 

@@ -1,6 +1,6 @@
-import { TCreateUserDTO } from '../models';
-import { validUserSchema } from '../models/user/schemas/user.shema';
-import { validateDTO } from '../common/utils/validateDTO';
+import { TCreateUserDTO } from '../../models';
+import { validUserSchema } from '../../models/user/schemas/user.shema';
+import { validateDTO } from '../utils/validateDTO';
 import { RequestHandler } from 'express';
 import passport from 'passport';
 

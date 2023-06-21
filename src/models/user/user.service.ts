@@ -1,7 +1,7 @@
-import { Role } from '../common/interfaces/role.interface';
-import { IAuthCredentialsDTO, IUserInput, IUserJWT, TCreateUserDTO } from '../models';
-import { createUser, findUserByLogin } from '../repository/user.repository';
-import { generateTokens } from './sesssion.service';
+import { Role } from '../../common/interfaces/role.interface';
+import { IAuthCredentialsDTO, IUserInput, IUserJWT, TCreateUserDTO } from '..';
+import { createUser, findUserByLogin } from '../../repository/user.repository';
+import { generateTokens } from '../../authentication/sesssion.service';
 
 export const signUp = async (payload: TCreateUserDTO) => {
   try {

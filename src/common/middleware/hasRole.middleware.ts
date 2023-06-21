@@ -1,5 +1,5 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import { IUserJWT } from '../models';
+import { IUserJWT } from '../../models';
 
 // TODO change any
 export const hasRole = (permitions: Array<any>): RequestHandler => {

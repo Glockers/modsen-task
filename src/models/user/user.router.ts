@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { logOutController, loginController, refreshAccessToken, signUpController } from '../controllers/auth.controller';
-import { validateUserDTO } from '../middleware/auth.middleware';
+import { logOutController, loginController, refreshAccessToken, signUpController } from './user.controller';
+import { validateUserDTO } from '../../common/middleware/auth.middleware';
 
 const authRouter = Router();
 

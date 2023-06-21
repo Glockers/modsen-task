@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
-import { TValidatePayload } from '../common/utils/validateDTO';
+import { TValidatePayload } from '../../common/utils/validateDTO';
 // import jwt from 'jsonwebtoken';
-import { IUserDTO, IUserJWT, TCreateUserDTO } from '../models';
-import { logIn, signUp } from '../service/auth.service';
-import appConfig from '../config/app.config';
-import { ITokenPair } from '../authentication/interfaces/token.inteface';
-import { validateJWTToken } from '../service/sesssion.service';
+import { IUserDTO, IUserJWT, TCreateUserDTO } from '..';
+import { logIn, signUp } from './user.service';
+import appConfig from '../../config/app.config';
+import { ITokenPair } from '../../authentication/interfaces/token.inteface';
+import { validateJWTToken } from '../../authentication/sesssion.service';
 
 export const signUpController = async (req: TValidatePayload<TCreateUserDTO>, res: Response): Promise<void> => {
   const validationPayload = req.validatedPayload;

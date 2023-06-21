@@ -1,5 +1,5 @@
-import { TCreateMeetupDTO, TUpdateMeetupDTO, createMeetupSchema, updateMeetupSchema } from '../models';
-import { validateDTO } from '../common/utils/validateDTO';
+import { TCreateMeetupDTO, TUpdateMeetupDTO, createMeetupSchema, updateMeetupSchema } from '../../models';
+import { validateDTO } from '../utils/validateDTO';
 
 export function createValidationMiddleware() {
   return validateDTO<TCreateMeetupDTO>(createMeetupSchema);
