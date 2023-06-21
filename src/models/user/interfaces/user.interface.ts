@@ -1,10 +1,12 @@
+import { Role } from '../../../common/interfaces/role.interface';
+
 export interface IUserAttributes {
   id: number;
   login: string;
   password: string;
-  role: string;
+  role: Role;
 }
 
-export type IUserInput = Omit<IUserAttributes, 'id'>
+export interface IUserInput extends Omit<IUserAttributes, 'id'> { }
 
-export type IAuthCredentials = Omit<IUserAttributes, 'id' | 'role'>
+export interface IUserJWT extends Omit<IUserAttributes, 'password' | 'id'> { }

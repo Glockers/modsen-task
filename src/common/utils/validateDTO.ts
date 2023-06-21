@@ -1,7 +1,7 @@
 import { Schema } from 'joi';
 import { NextFunction, Request, Response } from 'express';
-import { isEmptyObject } from '../common/helpers/objectUtils';
-import createLogger from '../common/utils/logger';
+import { isEmptyObject } from '../helpers/objectUtils';
+import createLogger from './logger';
 
 const logger = createLogger(__filename);
 

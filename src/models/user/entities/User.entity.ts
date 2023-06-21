@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { IUserAttributes } from '../interfaces/user.interface';
+import { Role } from '../../../common/interfaces/role.interface';
 
 @Entity('users')
 export class User implements IUserAttributes {
@@ -13,5 +14,5 @@ export class User implements IUserAttributes {
   public password!: string;
 
   @Column({ type: 'varchar' })
-  public role!: string;
+  public role!: Role;
 }

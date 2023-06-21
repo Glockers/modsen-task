@@ -1,8 +1,8 @@
 import { IDatabaseResponse } from '../common/interfaces/databaseResponse.interface';
 import { createMeetup, deleteMeetupById, getAllMeetup, getMeetupById, updateMeetup } from '../repository/meetup.repository';
-import { IMeetupAttributes, TFilterMeetupsDTO } from '../models';
+import { IMeetupAttributes, IMeetupInput, TFilterMeetupsDTO } from '../models';
 
-export const create = async (payload: any): Promise<IDatabaseResponse<IMeetupAttributes>> => {
+export const create = async (payload: IMeetupInput): Promise<IDatabaseResponse<IMeetupAttributes>> => {
   try {
     const createdMeetup = await createMeetup(payload);
     return { data: createdMeetup, status: 200 };
@@ -16,7 +16,7 @@ export const deleteById = async (id: number): Promise<IDatabaseResponse<string>>
     await deleteMeetupById(id);
     return { data: 'meetup удален!', status: 200 };
   } catch (error) {
-    console.error('Ошибка при удалении meetup:', error);
+    console.error('Ошибка при удалении meetup:', error); // TODO REMOVE
     return { data: 'meetup не найден', status: 500 };
   }
 };
@@ -36,7 +36,7 @@ export const getOneById = async (id: number): Promise<IDatabaseResponse<IMeetupA
       };
     }
   } catch (error) {
-    console.error('Ошибка на сервере при поиске meetup', error);
+    console.error('Ошибка на сервере при поиске meetup', error); // TODO REMOVE
     return {
       status: 500,
       data: 'Ошибка на сервере при поиске meetup'

@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 import * as DBService from '../service/meetup.service';
-import { TValidatePayload } from '../middleware/validateDTO.middlware';
+import { TValidatePayload } from '../common/utils/validateDTO';
 import { TCreateMeetupDTO, TFilterMeetupsDTO, TUpdateMeetupDTO } from '../models';
 
 export const create = async (req: TValidatePayload<TCreateMeetupDTO>, res: Response) => {

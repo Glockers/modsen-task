@@ -1,37 +1,46 @@
-import { Request, Response } from 'express';
-import { TValidatePayload } from '../middleware/validateDTO.middlware';
-import { generateTokens } from '../config/jwt/jwt.module';
-import jwt from 'jsonwebtoken';
-import { IUserDTO, TCreateUserDTO } from '../models';
+import { NextFunction, Request, Response } from 'express';
+import { TValidatePayload } from '../common/utils/validateDTO';
+// import jwt from 'jsonwebtoken';
+import { IUserDTO, IUserJWT, TCreateUserDTO } from '../models';
+import { logIn, signUp } from '../service/auth.service';
+import appConfig from '../config/app.config';
+import { ITokenPair } from '../authentication/interfaces/token.inteface';
+import { validateJWTToken } from '../service/sesssion.service';
 
-const jwtSecret = process.env.SECRET_JWT || 'secret';
-
-export const signupUser = async (req: TValidatePayload<TCreateUserDTO>, res: Response) => {
+export const signUpController = async (req: TValidatePayload<TCreateUserDTO>, res: Response): Promise<void> => {
   const validationPayload = req.validatedPayload;
-  res.send(validationPayload);
+  const result = await signUp(validationPayload);
+  res.status(result.status).json(result);
 };
 
-export const loginUser = async (req: TValidatePayload<IUserDTO>, res: Response) => {
+// TODO Change placestring on secure cookie
+export const loginController = async (req: TValidatePayload<IUserDTO>, res: Response): Promise<void> => {
   const validationPayload = req.validatedPayload;
-  console.log(validationPayload);
-  const tokens = generateTokens({ username: 'max' });
-  return res.json(tokens);
-  // res.send(validationPayload);
+  const result = await logIn(validationPayload);
+  res.status(result.status).cookie('jwt_tokens', result.data, {
+    httpOnly: true,
+    secure: appConfig.APP_NODE_ENV === 'production'
+  }).end();
 };
 
-export const refreshAccessToken = async (req: Request, res: Response) => {
-  const { refreshToken } = req.body;
-  // Проверка и валидация Refresh токена
+// TODO
+export const refreshAccessToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const tokens: ITokenPair = req.cookies.jwt_tokens;
   try {
-    const decoded = jwt.verify(refreshToken, jwtSecret) as any;
+    const decoded = validateJWTToken(tokens.refreshToken, 'refresh');
     console.log(decoded);
 
-    const username = decoded.username;
-    const user = { username }; // В данном примере предполагается, что userId верен
-    const tokens = generateTokens(user);
-    return res.json(tokens);
+    const user: IUserJWT = { login: decoded.login, role: decoded.role };
+    res.status(204).cookie('jwt_tokens', user, {
+      httpOnly: true,
+      secure: appConfig.APP_NODE_ENV === 'production'
+    }).end();
   } catch (err) {
-    console.error(err);
-    return res.status(401).json({ error: 'Неверный Refresh токен' });
+    throw new Error('error with refresh');
   }
+};
+
+export const logOutController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  res.clearCookie('jwt_tokens');
+  res.status(200).json({ message: 'User logged out successfully' });
 };
