@@ -4,6 +4,7 @@ import { IAuthCredentialsDTO } from '../models';
 import jwtConfig from '../config/jwt.config';
 import { findUserByLogin } from '../models/user/user.repository';
 import { ITokenPair } from './interfaces/token.inteface';
+import passport from 'passport';
 
 const cookieExtractorAccessToken = (req: Request): string => {
   const tokens: ITokenPair = req.cookies?.jwt_tokens;
@@ -25,3 +26,7 @@ export const accessJWTStrategy = new JwtStrategy(jwtOptions, (payload: IAuthCred
     done('Unauthorized1', false);
   }
 });
+
+passport.use('access', accessJWTStrategy);
+
+export default passport;

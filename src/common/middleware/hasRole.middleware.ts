@@ -1,5 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { IUserJWT } from '../../models';
+import { AppError } from '../exceptions/AppError';
 
 // TODO change any
 export const hasRole = (permitions: Array<any>): RequestHandler => {
@@ -8,7 +9,7 @@ export const hasRole = (permitions: Array<any>): RequestHandler => {
     if (permitions.includes(user.role)) {
       next();
     } else {
-      throw new Error('Forbidden');
+      next(AppError.NoPermission());
     }
   };
 };

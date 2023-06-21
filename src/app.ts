@@ -4,9 +4,12 @@ import express, { Application } from 'express';
 import initDatabases from './provider/init';
 import routes from './common/routes';
 import cookieParser from 'cookie-parser';
-import passport from './authentication/sesssion.service';
 import { authenticate } from './common/middleware/auth.middleware';
 import { hasRole } from './common/middleware/hasRole.middleware';
+import { errorHandler } from './common/middleware/errorHandler.middleware';
+import { logErrors } from './common/middleware/loggerError.middleware';
+import { AppError } from './common/exceptions/AppError';
+import passport from './authentication/access.strategy';
 
 const app: Application = express();
 initDatabases();
@@ -27,7 +30,10 @@ app.get('/protected', authenticate('access'), hasRole(['user', 'admin']), (req, 
 app.use('/api/v1', routes);
 
 app.all('*', (req, res, next) => {
-  next(new Error(`Cant find ${req.originalUrl} on this server!`));
+  next(AppError.NotFound(`Cant find ${req.originalUrl} on this server!`));
 });
+
+app.use(logErrors);
+app.use(errorHandler);
 
 export default app;

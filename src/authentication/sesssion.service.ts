@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { IUserJWT } from '../models';
 import jwtConfig from '../config/jwt.config';
-import passport from 'passport';
-import { accessJWTStrategy } from './access.strategy';
 
 export function generateTokens<T extends Object>(object: T) {
   const accessToken = jwt.sign(object, jwtConfig.JWT_ACCESS_SECRET, { expiresIn: jwtConfig.ACCESS_TOKEN_EXPIRATION });
@@ -18,6 +16,3 @@ export function validateJWTToken(token: string, type: 'access' | 'refresh'): IUs
     return null;
   }
 }
-passport.use('access', accessJWTStrategy);
-
-export default passport;

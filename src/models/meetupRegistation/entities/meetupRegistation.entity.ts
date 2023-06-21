@@ -1,8 +1,8 @@
 import { CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { IUserAttributes, User } from '../../user';
-import { Meetup } from '../../meetup/entities/meetup.entity';
 import { IMeetupRegistration } from '../interfaces/meetupRegistration.interface';
+import { Meetup } from '../../meetup/entities/meetup.entity';
 import { IMeetupAttributes } from '../../meetup/interfaces';
+import { User, IUserAttributes } from '../../user';
 
 @Entity('meetup_registrations')
 class MeetupRegistation implements IMeetupRegistration {
