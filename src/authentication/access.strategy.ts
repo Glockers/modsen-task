@@ -2,7 +2,7 @@ import { Request } from 'express';
 import { Strategy as JwtStrategy, VerifiedCallback, StrategyOptions } from 'passport-jwt';
 import { IAuthCredentialsDTO } from '../models';
 import jwtConfig from '../config/jwt.config';
-import { findUserByLogin } from '../repository/user.repository';
+import { findUserByLogin } from '../models/user/user.repository';
 import { ITokenPair } from './interfaces/token.inteface';
 
 const cookieExtractorAccessToken = (req: Request): string => {

@@ -1,5 +1,5 @@
 import { IDatabaseResponse } from '../../common/interfaces/databaseResponse.interface';
-import { createMeetup, deleteMeetupById, getAllMeetup, getMeetupById, updateMeetup } from '../../repository/meetup.repository';
+import { createMeetup, deleteMeetupById, getAllMeetup, getMeetupById, updateMeetup } from './meetup.repository';
 import { IMeetupAttributes, IMeetupInput, TFilterMeetupsDTO } from '..';
 
 export const create = async (payload: IMeetupInput): Promise<IDatabaseResponse<IMeetupAttributes>> => {

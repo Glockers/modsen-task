@@ -1,8 +1,8 @@
-import { IMeetupRegistration } from '../models/meetupRegistation';
-import MeetupRegistation from '../models/meetupRegistation/entities/meetupRegistation.entity';
-import PostgresDataSource from '../provider/db/postgres';
-import { getMeetupById } from './meetup.repository';
-import { findUserByLogin } from './user.repository';
+import { IMeetupRegistration } from '.';
+import MeetupRegistation from './entities/meetupRegistation.entity';
+import PostgresDataSource from '../../provider/db/postgres';
+import { getMeetupById } from '../meetup/meetup.repository';
+import { findUserByLogin } from '../user/user.repository';
 
 const registrationRepository = PostgresDataSource.getRepository(MeetupRegistation);
 

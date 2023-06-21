@@ -1,5 +1,5 @@
-import { IMeetupAttributes, IMeetupInput, Meetup, TFilterMeetupsDTO } from '../models';
-import PostgresDataSource from '../provider/db/postgres';
+import { IMeetupAttributes, IMeetupInput, Meetup, TFilterMeetupsDTO } from '..';
+import PostgresDataSource from '../../provider/db/postgres';
 import { Like } from 'typeorm';
 
 const meetupRepository = PostgresDataSource.getRepository(Meetup);
