@@ -1,0 +1,23 @@
+import jwt from 'jsonwebtoken';
+import { IUserJWT } from '../models';
+import jwtConfig from '../config/jwt.config';
+import passport from 'passport';
+import { accessJWTStrategy } from '../authentication/access.strategy';
+
+export function generateTokens<T extends Object>(object: T) {
+  const accessToken = jwt.sign(object, jwtConfig.JWT_ACCESS_SECRET, { expiresIn: jwtConfig.ACCESS_TOKEN_EXPIRATION });
+  const refreshToken = jwt.sign(object, jwtConfig.JWT_REFRESH_SECRET, { expiresIn: jwtConfig.REFRESH_TOKEN_EXPIRATION });
+  return { accessToken, refreshToken };
+}
+
+export function validateJWTToken(token: string, type: 'access' | 'refresh'): IUserJWT | null {
+  try {
+    const data = jwt.verify(token, type === 'access' ? jwtConfig.JWT_ACCESS_SECRET : jwtConfig.JWT_REFRESH_SECRET) as IUserJWT;
+    return data;
+  } catch (e) {
+    return null;
+  }
+}
+passport.use('access', accessJWTStrategy);
+
+export default passport;
