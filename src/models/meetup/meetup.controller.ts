@@ -26,7 +26,7 @@ export const updateById = catchAsyncFunction(async (req: TValidatePayload<TUpdat
 export const getOneById = catchAsyncFunction(async (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const result = await DBService.getOneById(id);
-  res.status(result.status).send(result.data);
+  res.status(result.status).json(result.data);
 });
 
 export const getAll = catchAsyncFunction(async (req: Request, res: Response) => {
