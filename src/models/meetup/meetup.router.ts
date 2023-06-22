@@ -11,8 +11,8 @@ meetupRouter.get('/:id', MeetupController.getOneById);
 
 meetupRouter.post('/', authenticate('access'), hasRole([Role.ADMIN]), createValidationMiddleware(), MeetupController.create);
 
-meetupRouter.put('/:id', updateValidationMiddleware(), MeetupController.updateById);
+meetupRouter.put('/:id', authenticate('access'), hasRole([Role.ADMIN]), updateValidationMiddleware(), MeetupController.updateById);
 
-meetupRouter.delete('/:id', MeetupController.deleteById);
+meetupRouter.delete('/:id', authenticate('access'), hasRole([Role.ADMIN]), MeetupController.deleteById);
 
 export default meetupRouter;

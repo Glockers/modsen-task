@@ -7,7 +7,7 @@ import { AppError } from '../../common/exceptions/AppError';
 
 const registrationRepository = PostgresDataSource.getRepository(MeetupRegistation);
 
-export const signUpForMeeting = async (login: string, meetupId: number): Promise<IMeetupRegistration> => {
+export const saveRegistationMeetup = async (login: string, meetupId: number): Promise<IMeetupRegistration> => {
   const user = await findUserByLogin(login);
   const meetup = await getMeetupById(meetupId);
   if (!user || !meetup) {
@@ -18,4 +18,8 @@ export const signUpForMeeting = async (login: string, meetupId: number): Promise
   registration.meetup = meetup;
 
   return registrationRepository.save(registration);
+};
+
+export const getAllmeetupRegistration = async (): Promise<Array<IMeetupRegistration>> => {
+  return registrationRepository.find();
 };
