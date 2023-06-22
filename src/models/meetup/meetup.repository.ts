@@ -41,8 +41,8 @@ export const updateMeetup = async (meetupId: number, payload: IMeetupInput) => {
   if (!selectedMeetup) {
     throw AppError.NotFound('Meetup not found');
   }
-
-  const updatedMeetup = await meetupRepository.save(payload);
+  const updatedMeetup = Object.assign(selectedMeetup, payload);
+  await meetupRepository.save(updatedMeetup);
   return updatedMeetup;
 };
 
