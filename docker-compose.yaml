@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  db:
+    container_name: local_pgdb
+    image: postgres:14-alpine
+    restart: always
+    ports:
+      - '5434:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - '8888:80'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: glockerswork@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: root
+
+volumes:
+  pgdata:
