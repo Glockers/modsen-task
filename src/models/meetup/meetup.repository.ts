@@ -1,4 +1,5 @@
 import { IMeetupAttributes, IMeetupInput, Meetup, TFilterMeetupsDTO } from '..';
+import { AppError } from '../../common/exceptions/AppError';
 import PostgresDataSource from '../../provider/db/postgres';
 import { Like } from 'typeorm';
 
@@ -14,7 +15,7 @@ export const deleteMeetupById = async (meetupId: number): Promise<IMeetupAttribu
   });
 
   if (!meetup) {
-    throw new Error('Meetup not found');
+    throw AppError.NotFound('Meetup not found');
   }
 
   return await meetupRepository.remove(meetup);
@@ -26,7 +27,7 @@ export const getMeetupById = async (meetupId: number): Promise<IMeetupAttributes
   });
 
   if (!meetup) {
-    throw new Error('Meetup not found');
+    throw AppError.NotFound('Meetup not found');
   }
 
   return meetup;
@@ -38,7 +39,7 @@ export const updateMeetup = async (meetupId: number, payload: IMeetupInput) => {
   });
 
   if (!selectedMeetup) {
-    throw new Error('meetup not found');
+    throw AppError.NotFound('Meetup not found');
   }
 
   const updatedMeetup = await meetupRepository.save(payload);

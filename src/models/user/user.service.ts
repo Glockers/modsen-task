@@ -2,12 +2,13 @@ import { Role } from '../../common/interfaces/role.interface';
 import { IAuthCredentialsDTO, IUserInput, IUserJWT, TCreateUserDTO } from '..';
 import { createUser, findUserByLogin } from './user.repository';
 import { generateTokens } from '../../authentication/sesssion.service';
+import { AppError } from '../../common/exceptions/AppError';
 
 export const signUp = async (payload: TCreateUserDTO) => {
   try {
     const selectedUser = await findUserByLogin(payload.login);
     if (selectedUser) {
-      return { data: 'such user already exists', status: 409 };
+      throw AppError.ConflictError('such user already exists');
     }
     const newUser: IUserInput = {
       login: payload.login,
@@ -17,7 +18,7 @@ export const signUp = async (payload: TCreateUserDTO) => {
     await createUser(newUser);
     return { data: 'Registration completed successfully', status: 200 };
   } catch (e) {
-    throw new Error('Error with create new meetup');
+    throw AppError.InternalServerError('Error with create new meetup');
   }
 };
 
@@ -35,6 +36,6 @@ export const logIn = async (payload: IAuthCredentialsDTO) => {
 
     return { data: tokens, status: 204 };
   } catch (e) {
-    return { data: 'Error with create new meetup', status: 500 };
+    throw AppError.InternalServerError('Error with meetup');
   }
 };

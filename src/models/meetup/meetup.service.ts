@@ -44,7 +44,7 @@ export const getOneById = async (id: number): Promise<IDatabaseResponse<IMeetupA
   }
 };
 
-export const getAll = async (params: TFilterMeetupsDTO): Promise<IDatabaseResponse<any>> => {
+export const getAll = async (params: TFilterMeetupsDTO): Promise<IDatabaseResponse<Array<IMeetupAttributes>>> => {
   try {
     const res = await getAllMeetup(params);
     return {
@@ -60,7 +60,7 @@ export const getAll = async (params: TFilterMeetupsDTO): Promise<IDatabaseRespon
 };
 
 // TODO
-export const update = async (meetupId: number, payload: any): Promise<IDatabaseResponse<string>> => {
+export const update = async (meetupId: number, payload: IMeetupInput): Promise<IDatabaseResponse<string>> => {
   try {
     await updateMeetup(meetupId, payload);
     return {

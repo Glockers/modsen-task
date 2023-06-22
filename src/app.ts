@@ -10,6 +10,7 @@ import { errorHandler } from './common/middleware/errorHandler.middleware';
 import { logErrors } from './common/middleware/loggerError.middleware';
 import { AppError } from './common/exceptions/AppError';
 import passport from './authentication/access.strategy';
+import { Role } from './common';
 
 const app: Application = express();
 initDatabases();
@@ -22,7 +23,7 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 // TODO REMOVE
-app.get('/protected', authenticate('access'), hasRole(['user', 'admin']), (req, res) => {
+app.get('/protected', authenticate('access'), hasRole([Role.USER, Role.ADMIN]), (req, res) => {
   res.json({ message: 'Защищенный маршрут' });
 });
 
