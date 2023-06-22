@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { TValidatePayload } from '../../common/utils/validateDTO';
 // import jwt from 'jsonwebtoken';
 import { IUserDTO, IUserJWT, TCreateUserDTO } from '..';
-import { logIn, signUp } from './user.service';
+import { getProfileService, logIn, signUp } from './user.service';
 import appConfig from '../../config/app.config';
 import { ITokenPair } from '../../authentication/interfaces/token.inteface';
 import { validateJWTToken } from '../../authentication/sesssion.service';
@@ -38,4 +38,10 @@ export const refreshAccessToken = catchAsyncFunction(async (req: Request, res: R
 export const logOutController = catchAsyncFunction(async (req: Request, res: Response, next: NextFunction) => {
   res.clearCookie('jwt_tokens');
   res.status(200).json({ message: 'User logged out successfully' });
+});
+
+export const getProfileController = catchAsyncFunction(async (req: Request, res: Response, next: NextFunction) => {
+  const user: IUserJWT = req.user as IUserJWT;
+  const result = await getProfileService(user);
+  res.status(result.status).json(result.data);
 });

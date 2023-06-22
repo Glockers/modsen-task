@@ -6,7 +6,7 @@ import { findUserByLogin } from '../models/user/user.repository';
 import { ITokenPair } from './interfaces/token.inteface';
 import passport from 'passport';
 
-const cookieExtractorAccessToken = (req: Request): string => {
+export const cookieExtractorAccessToken = (req: Request): string => {
   const tokens: ITokenPair = req.cookies?.jwt_tokens;
   if (req && tokens) {
     return tokens.accessToken;

@@ -17,8 +17,8 @@ export class AppError extends Error {
     return new AppError(400, message);
   }
 
-  static Unauthorized() {
-    return new AppError(401, 'User is not authorized');
+  static Unauthorized(message = 'User is not authorized') {
+    return new AppError(401, message);
   }
 
   static NoPermission() {
