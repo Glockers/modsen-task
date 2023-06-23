@@ -2,12 +2,13 @@
 import Joi from 'joi';
 import validateConfig from '../common/utils/validateConfig';
 
+// TODO REMOOVE
 interface IAppConfig {
   APP_NODE_ENV: string,
   APP_HOST: string,
   APP_PORT: number
 }
-
+// TODO мигрировать на Zod
 const validationSchema = Joi.object<IAppConfig>({
   APP_NODE_ENV: Joi.string()
     .valid('development', 'production', 'test')
