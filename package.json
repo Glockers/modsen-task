@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
+    "dev": "docker-compose up",
     "build": "rimraf dist && tsc",
     "prestart": "tsc --project tsconfig.json",
     "start": "node .",

@@ -9,6 +9,4 @@ export function errorHandler(err: AppError, req: Request, res: Response, next: N
     message: err.message,
     stack: appConfig.APP_NODE_ENV === 'debug' ? err.stack : undefined
   });
-
-  next(err);
 }

@@ -1,0 +1,10 @@
+.git
+.gitignore
+.config
+dist
+.vscode
+local_pgdata
+postman
+node_modules
+
+README.md

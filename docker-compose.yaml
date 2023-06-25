@@ -1,14 +1,15 @@
 version: '3.9'
 services:
-  db:
+  pg:
     container_name: local_pgdb
     image: postgres:14-alpine
     restart: always
     ports:
       - '5434:5432'
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
+      - POSTGRES_DB={TYPEORM_DATABASE}
+      - POSTGRES_USER=${TYPEORM_USERNAME}
+      - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql/data
   pgadmin:
@@ -20,6 +21,40 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: glockerswork@gmail.com
       PGADMIN_DEFAULT_PASSWORD: root
-
+      PGADMIN_CONFIG_CONSOLE_LOG_LEVEL: 40
+      PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: 'False'
+      PGADMIN_CONFIG_DEBUG: 'False'
+  express-typescript-docker:
+    depends_on:
+      - pg
+    environment:
+      - APP_PORT=${APP_PORT}
+      - APP_HOST=${APP_HOST}
+      - APP_NODE_ENV=${APP_NODE_ENV}
+      - TYPEORM_USERNAME=${TYPEORM_USERNAME}
+      - TYPEORM_PASSWORD=${TYPEORM_PASSWORD}
+      - TYPEORM_HOST=${TYPEORM_HOST}
+      - TYPEORM_DATABASE=${TYPEORM_DATABASE}
+      - TYPEORM_LOGGING=${TYPEORM_LOGGING}
+      - TYPEORM_CONNECTION=${TYPEORM_CONNECTION}
+      - TYPEORM_SYNCHRONIZE=${TYPEORM_SYNCHRONIZE}
+      - LOGGER_LEVEL=${LOGGER_LEVEL}
+      - LOGGER_CONTEXT_NAME=${LOGGER_CONTEXT_NAME}
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - REFRESH_TOKEN_EXPIRATION=${REFRESH_TOKEN_EXPIRATION}
+      - ACCESS_TOKEN_EXPIRATION=${ACCESS_TOKEN_EXPIRATION}
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/usr/src/app
+    container_name: express-typescript-docker
+    expose:
+      - '8080'
+    ports:
+      - '8080:8080'
+    command: npm run server:watch
+    restart: on-failure
 volumes:
   pgdata:
