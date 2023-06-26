@@ -1,4 +1,4 @@
-import { TCreateMeetupDTO, TUpdateMeetupDTO, createMeetupSchema, updateMeetupSchema } from '../../models';
+import { TCreateMeetupDTO, TFilterMeetupsDTO, TUpdateMeetupDTO, createMeetupSchema, filterMeetupsSchema, updateMeetupSchema } from '../../models';
 import { validateDTO } from '../utils/validateDTO';
 
 export function createValidationMiddleware() {
@@ -7,4 +7,8 @@ export function createValidationMiddleware() {
 
 export function updateValidationMiddleware() {
   return validateDTO<Partial<TUpdateMeetupDTO>>(updateMeetupSchema);
+}
+
+export function filderValidationMiddleware() {
+  return validateDTO<TFilterMeetupsDTO>(filterMeetupsSchema, true);
 }
