@@ -1,5 +1,6 @@
-import { TCreateMeetupDTO, TFilterMeetupsDTO, TUpdateMeetupDTO, createMeetupSchema, filterMeetupsSchema, updateMeetupSchema } from '../../models';
+import { TCreateMeetupDTO, TUpdateMeetupDTO, createMeetupSchema, filterMeetupsSchema, updateMeetupSchema } from '../../models';
 import { validateDTO } from '../utils/validateDTO';
+import { validateQueryParams } from '../utils/validateQueryParams';
 
 export function createValidationMiddleware() {
   return validateDTO<TCreateMeetupDTO>(createMeetupSchema);
@@ -10,5 +11,5 @@ export function updateValidationMiddleware() {
 }
 
 export function filderValidationMiddleware() {
-  return validateDTO<TFilterMeetupsDTO>(filterMeetupsSchema, true);
+  return validateQueryParams(filterMeetupsSchema, 'query');
 }

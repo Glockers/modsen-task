@@ -1,21 +1,33 @@
 import { Router } from 'express';
-import { authenticate, checkAuth, validateUserDTO } from '../common';
+import { authenticate, checkAuth, validateLogInDTO, validateRegInDTO } from '../common';
 import { logOutController, loginController, refreshAccessToken, signUpController } from './auth.controller';
 
 const authRouter = Router();
 
 /**
-  * @openapi
-  * /api/v1/auth/login:
-  *  post:
-  *     tags:
-  *     - Auth
-  *     description: login user
-  *     responses:
-  *       200:
-  *         description: App is up and running
+ * @openapi
+ * /api/v1/auth/login:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     description: Login user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schema/userLogin'
+ *     responses:
+ *       200:
+ *         description: Success login
+ *       409:
+ *        description: user is already logged in
+ *       400:
+ *        description: Bad request
+ *       500:
+ *        description: Internal server error
 */
-authRouter.post('/login', validateUserDTO(), checkAuth(false, 'Вы уже авторизованы'), loginController);
+authRouter.post('/login', validateLogInDTO(), checkAuth(false, 'Вы уже авторизованы'), loginController);
 
 /**
   * @openapi
@@ -24,11 +36,23 @@ authRouter.post('/login', validateUserDTO(), checkAuth(false, 'Вы уже ав�
   *     tags:
   *     - Auth
   *     description: signup user
+  *     requestBody:
+  *       required: true
+  *       content:
+  *         application/json:
+  *           schema:
+  *             $ref: '#/components/schema/userSignUpSchema'
   *     responses:
   *       200:
-  *         description: App is up and running
+  *         description: success
+  *       409:
+  *        description: such user already exists
+  *       400:
+  *        description: Bad request
+  *       500:
+  *        description: Internal server error
 */
-authRouter.post('/signup', validateUserDTO(), checkAuth(false, 'Вы уже авторизованы'), signUpController);
+authRouter.post('/signup', validateRegInDTO(), checkAuth(false, 'Вы уже авторизованы'), signUpController);
 
 /**
   * @openapi
@@ -40,6 +64,10 @@ authRouter.post('/signup', validateUserDTO(), checkAuth(false, 'Вы уже ав
   *     responses:
   *       200:
   *         description: App is up and running
+  *       401:
+  *         description: Unauthorized
+  *       500:
+  *        description: Internal server error
 */
 authRouter.post('/refresh-tokens', authenticate('access'), refreshAccessToken);
 
@@ -53,6 +81,10 @@ authRouter.post('/refresh-tokens', authenticate('access'), refreshAccessToken);
   *     responses:
   *       200:
   *         description: App is up and running
+  *       401:
+  *        description: Unauthorized
+  *       500:
+  *        description: Internal server error
 */
 authRouter.post('/logout', authenticate('access'), logOutController);
 

@@ -17,9 +17,26 @@ export const updateMeetupSchema = Joi.object<Partial<TCreateMeetupDTO>>({
   tags: Joi.array().items(Joi.string())
 });
 
+const sortableFields = [
+  'id',
+  'title',
+  'location',
+  'date'
+];
+
 export const filterMeetupsSchema = Joi.object<TFilterMeetupsDTO>({
   search: Joi.string(),
   filter: Joi.array().items(Joi.string()),
   page: Joi.number().integer().min(1),
-  limit: Joi.number().integer().min(1)
+  limit: Joi.number().integer().min(1),
+  sortBy: Joi.string().valid(...sortableFields).when('sortOrder', {
+    is: Joi.exist().valid('ASC', 'DESC'),
+    then: Joi.required(),
+    otherwise: Joi.optional()
+  }),
+  sortOrder: Joi.alternatives().conditional('sortBy', {
+    is: Joi.exist(),
+    then: Joi.valid('ASC', 'DESC').required(),
+    otherwise: Joi.optional()
+  })
 });

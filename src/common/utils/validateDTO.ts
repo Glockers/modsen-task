@@ -9,11 +9,13 @@ export function validateDTO<TPayload extends object>(schema: Schema<TPayload>, i
   return function validateMiddleware(req: TValidatePayload<TPayload>, res: Response, next: NextFunction) {
     const payload: TPayload = req.body;
     if (isEmptyObject(payload) && !isEmpty) {
-      throw AppError.BadRequest('Ничего не введено');
+      next(AppError.BadRequest('Ничего не введено'));
     }
     const validationResult = schema.validate(payload);
     if (validationResult.error) {
-      throw AppError.BadRequest('validation: ' + validationResult.error.details);
+      const errorMessages = validationResult.error.details.map((error) => error.message);
+      const errorMessage = errorMessages.join(', ');
+      next(AppError.BadRequest(`validation: ${errorMessage}`));
     } else {
       req.validatedPayload = validationResult.value;
       next();

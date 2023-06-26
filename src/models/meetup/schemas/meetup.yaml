@@ -1,0 +1,109 @@
+components:
+  schemas:
+    CreateMeetupSchema:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        date:
+          type: string
+          format: date
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+        - title
+        - location
+        - date
+        - tags
+    UpdateMeetupSchema:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        date:
+          type: string
+          format: date
+        tags:
+          type: array
+          items:
+            type: string
+    FilterMeetupsQuery:
+      type: object
+      properties:
+        search:
+          type: string
+        filter:
+          type: array
+          items:
+            type: string
+        page:
+          type: integer
+          minimum: 1
+        limit:
+          type: integer
+          minimum: 1
+        sortBy:
+          type: string
+          enum:
+            - id
+            - title
+            - location
+            - date
+        sortOrder:
+          type: string
+          enum:
+            - ASC
+            - DESC
+  parameters:
+    FilterMeetupsQuerySearch:
+      in: query
+      name: search
+      schema:
+        type: string
+    FilterMeetupsQueryFilter:
+      in: query
+      name: filter
+      schema:
+        type: array
+        items:
+          type: string
+    FilterMeetupsQueryPage:
+      in: query
+      name: page
+      schema:
+        type: integer
+        minimum: 1
+    FilterMeetupsQueryLimit:
+      in: query
+      name: limit
+      schema:
+        type: integer
+        minimum: 1
+    FilterMeetupsQuerySortBy:
+      in: query
+      name: sortBy
+      schema:
+        type: string
+        enum:
+          - id
+          - title
+          - location
+          - date
+    FilterMeetupsQuerySortOrder:
+      in: query
+      name: sortOrder
+      schema:
+        type: string
+        enum:
+          - ASC
+          - DESC

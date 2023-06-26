@@ -1,11 +1,15 @@
-import { TCreateUserDTO } from '../../models';
-import { validUserSchema } from '../../models/user/schemas/user.shema';
+import { userLoginSchema, userSignUpSchema } from '../../authentication/schemas/auth.schema';
+import { IAuthCredentialsDTO, TCreateUserDTO } from '../../models';
 import { validateDTO } from '../utils/validateDTO';
 import { RequestHandler } from 'express';
 import passport from 'passport';
 
-export function validateUserDTO() {
-  return validateDTO<TCreateUserDTO>(validUserSchema);
+export function validateLogInDTO() {
+  return validateDTO<IAuthCredentialsDTO>(userLoginSchema);
+}
+
+export function validateRegInDTO() {
+  return validateDTO<TCreateUserDTO>(userSignUpSchema);
 }
 
 export function authenticate(stratagy: string): RequestHandler {

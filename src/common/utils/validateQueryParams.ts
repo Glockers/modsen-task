@@ -2,9 +2,9 @@ import { NextFunction, Response, Request } from 'express';
 import { AppError } from '../exceptions/AppError';
 import { Schema } from 'joi';
 
-export function validateQueryParams<TParams extends Schema>(schema: TParams) {
+export function validateQueryParams<TParams extends Schema>(schema: TParams, type: 'query' | 'param' = 'param') {
   return function validateMiddleware(req: Request, res: Response, next: NextFunction) {
-    const payload = req.params;
+    const payload = type === 'param' ? req.params : req.query;
     const validationResult = schema.validate(payload);
     if (validationResult.error) {
       const errorMessages = validationResult.error.details.map((error) => error.message);

@@ -1,0 +1,35 @@
+components:
+  schema:
+    userLogin:
+      type: object
+      required:
+        - login
+        - password
+      properties:
+        login:
+          type: string
+          example: test
+        password:
+          type: string
+          example: 33test
+    userSignUpSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The user's name
+          example: maxim
+        login:
+          type: string
+          description: The user's login
+          example: maxim
+        password:
+          type: string
+          description: The user's password
+          minLength: 5
+          maxLength: 12
+          example: maxim
+      required:
+        - name
+        - login
+        - password

@@ -11,6 +11,7 @@ export const signUp = async (payload: TCreateUserDTO) => {
     throw AppError.ConflictError('such user already exists');
   }
   const newUser: IUserInput = {
+    name: payload.name,
     login: payload.login,
     password: payload.password,
     role: Role.USER
