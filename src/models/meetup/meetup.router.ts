@@ -22,7 +22,7 @@ meetupRouter.get('/', filderValidationMiddleware(), MeetupController.getAll);
 
 meetupRouter.get('/:id', validateQueryParams(idNumberSchema), MeetupController.getOneById);
 
-meetupRouter.post('/', authenticate('access'), hasRole([Role.USER]), createValidationMiddleware(), MeetupController.create);
+meetupRouter.post('/', authenticate('access'), hasRole([Role.ADMIN]), createValidationMiddleware(), MeetupController.create);
 
 meetupRouter.put('/:id', authenticate('access'), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), updateValidationMiddleware(), MeetupController.updateById);
 
