@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import { getProfileController, logOutController, loginController, refreshAccessToken, signUpController } from './user.controller';
 import { authenticate, validateUserDTO } from '../../common/middleware/auth.middleware';
-import { Role, hasRole } from '../../common';
+import { checkAuth } from '../../common';
 
 const authRouter = Router();
 
-authRouter.post('/login', validateUserDTO(), hasRole(['not-auth']), loginController);
-authRouter.post('/signup', validateUserDTO(), hasRole(['not-auth']), signUpController);
-authRouter.post('/refresh-tokens', authenticate('access'), hasRole([Role.ADMIN, Role.USER]), refreshAccessToken);
-authRouter.post('/logout', authenticate('access'), hasRole([Role.ADMIN, Role.USER]), logOutController);
-authRouter.get('/profile', authenticate('access'), hasRole([Role.ADMIN, Role.USER]), getProfileController);
+authRouter.post('/login', validateUserDTO(), checkAuth(false, 'Вы уже авторизованы'), loginController);
+authRouter.post('/signup', validateUserDTO(), checkAuth(false, 'Вы уже авторизованы'), signUpController);
+authRouter.post('/refresh-tokens', authenticate('access'), refreshAccessToken);
+authRouter.post('/logout', authenticate('access'), logOutController);
+authRouter.get('/profile', authenticate('access'), getProfileController);
 
 export default authRouter;

@@ -5,10 +5,10 @@ import { AppError } from '../exceptions/AppError';
 
 export type TValidatePayload<T> = Request & { validatedPayload?: T }
 
-export function validateDTO<TPayload extends object>(schema: Schema<TPayload>) {
+export function validateDTO<TPayload extends object>(schema: Schema<TPayload>, isEmpty = false) {
   return function validateMiddleware(req: TValidatePayload<TPayload>, res: Response, next: NextFunction) {
     const payload: TPayload = req.body;
-    if (isEmptyObject(payload)) {
+    if (isEmptyObject(payload) && !isEmpty) {
       throw AppError.BadRequest('Ничего не введено');
     }
     const validationResult = schema.validate(payload);
