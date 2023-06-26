@@ -1,7 +1,6 @@
 import Joi from 'joi';
 import validateConfig from '../common/utils/validateConfig';
 
-// TODO REMOVE
 interface IPostgreConfig {
   TYPEORM_HOST: string,
   TYPEORM_USERNAME: string,
@@ -11,7 +10,6 @@ interface IPostgreConfig {
   TYPEORM_SYNCHRONIZE: boolean,
   TYPEORM_LOGGING: boolean,
 }
-// TODO мигрировать на Zod
 const validationSchema = Joi.object<IPostgreConfig>({
   TYPEORM_DATABASE: Joi.string().required(),
   TYPEORM_HOST: Joi.string().default('http://localhost').required(),

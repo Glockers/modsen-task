@@ -18,7 +18,6 @@ export const deleteById = catchAsyncFunction(async (req: Request, res: Response)
 
 export const updateById = catchAsyncFunction(async (req: TValidatePayload<TUpdateMeetupDTO>, res: Response) => {
   const id = Number(req.params.id);
-  console.log(id);
   const validatedPayload = req.validatedPayload;
   const result = await DBService.update(id, validatedPayload);
   res.status(result.status).send(result);

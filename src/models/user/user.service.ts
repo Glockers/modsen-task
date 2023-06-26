@@ -1,7 +1,7 @@
 import { Role } from '../../common/interfaces/role.interface';
 import { IAuthCredentialsDTO, IUserAttributes, IUserInput, IUserJWT, TCreateUserDTO } from '..';
 import { createUser, findUserByLogin } from './user.repository';
-import { generateTokens } from '../../authentication/sesssion.service';
+import { generateTokens } from '../../authentication/auth.service';
 import { AppError } from '../../common/exceptions/AppError';
 import { IDatabaseResponse } from '../../common';
 

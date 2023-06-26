@@ -8,6 +8,8 @@ import { errorHandler } from './common/middleware/errorHandler.middleware';
 import { logErrors } from './common/middleware/loggerError.middleware';
 import { AppError } from './common/exceptions/AppError';
 import passport from './authentication/access.strategy';
+import swaggerDocs from './common/utils/swagger';
+import appConfig from './config/app.config';
 
 const app: Application = express();
 initDatabases();
@@ -20,6 +22,8 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 app.use('/api/v1', routes);
+
+swaggerDocs(app, appConfig.APP_PORT);
 
 app.all('*', (req, res, next) => {
   next(AppError.NotFound(`Cant find ${req.originalUrl} on this server!`));

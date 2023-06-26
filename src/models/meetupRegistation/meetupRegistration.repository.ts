@@ -21,5 +21,16 @@ export const saveRegistationMeetup = async (login: string, meetupId: number): Pr
 };
 
 export const getAllmeetupRegistration = async (): Promise<Array<IMeetupRegistration>> => {
-  return registrationRepository.find();
+  return registrationRepository.find({
+    select: {
+      user: {
+        id: true,
+        login: true
+      }
+    },
+    relations: {
+      meetup: true,
+      user: true
+    }
+  });
 };

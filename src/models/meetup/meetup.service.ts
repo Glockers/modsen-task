@@ -33,7 +33,7 @@ export const getAll = async (params: TFilterMeetupsDTO): Promise<IDatabaseRespon
   };
 };
 
-// TODO
+// TODO подумать как сделать лучше
 export const update = async (meetupId: number, payload: IMeetupInput): Promise<IDatabaseResponse<string>> => {
   await updateMeetup(meetupId, payload);
   return {

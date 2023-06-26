@@ -1,14 +1,12 @@
 import Joi from 'joi';
 import validateConfig from '../common/utils/validateConfig';
 
-// TODO REMOOVE
 interface IJWTConfig {
   JWT_ACCESS_SECRET: string,
   REFRESH_TOKEN_EXPIRATION: string,
   ACCESS_TOKEN_EXPIRATION: string,
   JWT_REFRESH_SECRET: string
 }
-// TODO мигрировать на Zod
 const validationSchema = Joi.object<IJWTConfig>({
   JWT_ACCESS_SECRET: Joi.string().required(),
   REFRESH_TOKEN_EXPIRATION: Joi.string().required(),
