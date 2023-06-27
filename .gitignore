@@ -4,3 +4,8 @@ node_modules
 /logs
 .env
 .eslintcache
+.env.production
+.env.development
+.vscode
+/dist
+/local_pgdata
