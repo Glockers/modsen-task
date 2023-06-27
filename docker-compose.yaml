@@ -30,8 +30,8 @@ services:
     depends_on:
       - pg
     build:
-      context: ./docker
-      dockerfile: app.Dockerfile.dev
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
     volumes:
       - ./:/usr/src/app
     container_name: express-typescript-docker
