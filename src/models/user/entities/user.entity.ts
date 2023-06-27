@@ -14,5 +14,8 @@ export class User implements IUserAttributes {
   public password!: string;
 
   @Column({ type: 'varchar' })
+  public name!: string;
+
+  @Column({ type: 'varchar' })
   public role!: Role;
 }
