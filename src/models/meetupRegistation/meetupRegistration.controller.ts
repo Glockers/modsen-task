@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { catchAsyncFunction } from '../../common/exceptions/catchAsync';
+import { catchAsyncFunction } from '../../common/helpers/catchAsync';
 import { getAllService, registerUserForMeetupService } from './meetupRegistration.service';
 import { IUserJWT } from '../user';
 

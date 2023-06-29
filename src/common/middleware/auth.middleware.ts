@@ -1,4 +1,4 @@
-import { userLoginSchema, userSignUpSchema } from '../../authentication/schemas/auth.schema';
+import { userLoginSchema, userSignUpSchema } from '../../auth/schemas/auth.schema';
 import { IAuthCredentialsDTO, TCreateUserDTO } from '../../models';
 import { validateDTO } from '../utils/validateDTO';
 import { RequestHandler } from 'express';

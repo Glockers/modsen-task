@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 import { errorHandler } from './common/middleware/errorHandler.middleware';
 import { logErrors } from './common/middleware/loggerError.middleware';
 import { AppError } from './common/exceptions/AppError';
-import passport from './authentication/access.strategy';
+import passport from './auth/access.strategy';
 import swaggerDocs from './common/utils/swagger';
 import appConfig from './config/app.config';
 

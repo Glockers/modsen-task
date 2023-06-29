@@ -2,7 +2,7 @@ import { Response, Request } from 'express';
 import * as DBService from './meetup.service';
 import { TValidatePayload } from '../../common/utils/validateDTO';
 import { TCreateMeetupDTO, TFilterMeetupsDTO, TUpdateMeetupDTO } from '..';
-import { catchAsyncFunction } from '../../common/exceptions/catchAsync';
+import { catchAsyncFunction } from '../../common/helpers/catchAsync';
 
 export const create = catchAsyncFunction(async (req: TValidatePayload<TCreateMeetupDTO>, res: Response) => {
   const validatedPayload = req.validatedPayload;

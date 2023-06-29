@@ -5,7 +5,7 @@ import { AppError } from '../../common/exceptions/AppError';
 
 export const create = async (payload: IMeetupInput): Promise<IDatabaseResponse<IMeetupAttributes>> => {
   const createdMeetup = await createMeetup(payload);
-  return { data: createdMeetup, status: 200 };
+  return { data: createdMeetup, status: 201 };
 };
 
 export const deleteById = async (id: number): Promise<IDatabaseResponse<string>> => {

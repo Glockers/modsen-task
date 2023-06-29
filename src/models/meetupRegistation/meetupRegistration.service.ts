@@ -15,6 +15,6 @@ export const registerUserForMeetupService = async (user: IUserJWT, meetupId: num
   const res = await saveRegistationMeetup(user.login, meetupId);
   return {
     data: res,
-    status: 200
+    status: 201
   };
 };

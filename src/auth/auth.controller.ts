@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { catchAsyncFunction } from '../common/exceptions/catchAsync';
+import { catchAsyncFunction } from '../common/helpers/catchAsync';
 import { TValidatePayload } from '../common/utils';
 import { IUserDTO, IUserJWT, TCreateUserDTO } from '../models';
 import appConfig from '../config/app.config';
