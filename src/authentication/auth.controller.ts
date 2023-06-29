@@ -3,9 +3,8 @@ import { NextFunction, Request, Response } from 'express';
 import { catchAsyncFunction } from '../common/exceptions/catchAsync';
 import { TValidatePayload } from '../common/utils';
 import { IUserDTO, IUserJWT, TCreateUserDTO } from '../models';
-import { logIn, signUp } from '../models/user/user.service';
 import appConfig from '../config/app.config';
-import { validateJWTToken } from './auth.service';
+import { logIn, signUp, validateJWTToken } from './auth.service';
 import { ITokenPair } from './interfaces/token.inteface';
 
 export const signUpController = catchAsyncFunction(async (req: TValidatePayload<TCreateUserDTO>, res: Response) => {
