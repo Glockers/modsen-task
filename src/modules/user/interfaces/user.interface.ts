@@ -1,4 +1,4 @@
-import { Role } from '../../../common/interfaces/role.interface';
+import { Role } from '../../../common/types/role.enum';
 
 export interface IUserAttributes {
   id: number;

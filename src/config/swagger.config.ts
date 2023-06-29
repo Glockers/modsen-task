@@ -23,5 +23,5 @@ export const swaggerUIOptions: swaggerJsdoc.Options = {
       }
     ]
   },
-  apis: ['./src/models/*/*.router.ts', './src/auth/*.router.ts', './src/**/schemas/*.yaml']
+  apis: ['./src/modules/*/*.router.ts', './src/auth/*.router.ts', './src/**/schemas/*.yaml']
 };

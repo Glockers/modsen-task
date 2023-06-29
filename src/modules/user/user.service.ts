@@ -1,13 +1,14 @@
 import { IUserAttributes, IUserJWT } from '..';
 import { findUserByLogin } from './user.repository';
 import { AppError } from '../../common/exceptions/AppError';
-import { IDatabaseResponse } from '../../common/interfaces';
+import { IDatabaseResponse, httpStatus } from '../../common/types';
+import { USER_NOT_FOUND } from './constants/message';
 
 export const getProfileService = async (user: IUserJWT): Promise<IDatabaseResponse<IUserAttributes>> => {
   const selectedUser = await findUserByLogin(user.login);
-  if (!selectedUser) throw AppError.NotFound('user not found');
+  if (!selectedUser) throw AppError.NotFound(USER_NOT_FOUND);
   return {
     data: selectedUser,
-    status: 200
+    status: httpStatus.OK
   };
 };

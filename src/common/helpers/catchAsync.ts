@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { AsyncFunction } from '../interfaces/asyncFunction';
+import { AsyncFunction } from '../types/asyncFunction';
 
 export function catchAsyncFunction(asyncFunction: AsyncFunction) {
   return (req: Request, res: Response, next: NextFunction) => {

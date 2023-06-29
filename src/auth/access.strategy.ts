@@ -1,8 +1,8 @@
 import { Request } from 'express';
 import { Strategy as JwtStrategy, VerifiedCallback, StrategyOptions } from 'passport-jwt';
-import { IAuthCredentialsDTO } from '../models';
+import { IAuthCredentialsDTO } from '../modules';
 import { jwtConfig } from '../config/jwt.config';
-import { findUserByLogin } from '../models/user/user.repository';
+import { findUserByLogin } from '../modules/user/user.repository';
 import { ITokenPair } from './interfaces/token.inteface';
 import passport from 'passport';
 

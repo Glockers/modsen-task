@@ -9,5 +9,5 @@ export const PostgresDataSource = new DataSource({
   database: typeormConfig.TYPEORM_DATABASE,
   logging: typeormConfig.TYPEORM_LOGGING,
   synchronize: typeormConfig.TYPEORM_SYNCHRONIZE,
-  entities: ['src/models/*/entities/*.entity.ts']
+  entities: ['src/**/*.entity.ts']
 });

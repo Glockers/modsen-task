@@ -4,7 +4,7 @@ import { PostgresDataSource } from './db/postgres';
 
 const logger = createLogger(__filename);
 
-async function checkPostgressConnection() {
+export async function checkPostgressConnection() {
   try {
     await PostgresDataSource.initialize();
     logger.info('Connection has been established successfully.');
@@ -13,9 +13,3 @@ async function checkPostgressConnection() {
     throw AppError.InternalServerError(`Unable to connect to the database: ${error}`);
   }
 }
-
-const initDatabases = () => Promise.all([
-  checkPostgressConnection()
-]);
-
-export { initDatabases };

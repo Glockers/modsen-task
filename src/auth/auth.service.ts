@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken';
-import { IAuthCredentialsDTO, IUserInput, IUserJWT, TCreateUserDTO } from '../models';
-import { jwtConfig } from '../config/jwt.config';
-import { AppError } from '../common/exceptions/AppError';
-import { createUser, findUserByLogin } from '../models/user/user.repository';
-import { Role } from '../common/interfaces';
+import { IAuthCredentialsDTO, IUserInput, IUserJWT, TCreateUserDTO } from '../modules';
+
+import { createUser, findUserByLogin } from '../modules/user/user.repository';
+import { Role, httpStatus } from '../common/types';
+import { AppError } from '../common/exceptions';
+import { jwtConfig } from '../config';
 
 export const signUp = async (payload: TCreateUserDTO) => {
   const selectedUser = await findUserByLogin(payload.login);
@@ -17,7 +18,7 @@ export const signUp = async (payload: TCreateUserDTO) => {
     role: Role.USER
   };
   await createUser(newUser);
-  return { data: 'Registration completed successfully', status: 200 };
+  return { data: 'Registration completed successfully', status: httpStatus.CREATED };
 };
 
 export const logIn = async (payload: IAuthCredentialsDTO) => {

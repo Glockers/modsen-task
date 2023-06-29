@@ -2,10 +2,11 @@ import { NextFunction, Request, Response } from 'express';
 
 import { catchAsyncFunction } from '../common/helpers/catchAsync';
 import { TValidatePayload } from '../common/utils';
-import { IUserDTO, IUserJWT, TCreateUserDTO } from '../models';
+import { IUserDTO, IUserJWT, TCreateUserDTO } from '../modules';
 import { logIn, signUp, validateJWTToken } from './auth.service';
 import { ITokenPair } from './interfaces/token.inteface';
 import { appConfig } from '../config';
+import { httpStatus } from '../common/types';
 
 export const signUpController = catchAsyncFunction(async (req: TValidatePayload<TCreateUserDTO>, res: Response) => {
   const validationPayload = req.validatedPayload;
@@ -35,5 +36,5 @@ export const refreshAccessToken = catchAsyncFunction(async (req: Request, res: R
 
 export const logOutController = catchAsyncFunction(async (req: Request, res: Response, next: NextFunction) => {
   res.clearCookie('jwt_tokens');
-  res.status(200).json({ message: 'User logged out successfully' });
+  res.status(httpStatus.OK).json({ message: 'User logged out successfully' });
 });

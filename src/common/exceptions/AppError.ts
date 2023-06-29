@@ -1,3 +1,5 @@
+import { httpStatus } from '../types';
+
 export class AppError extends Error {
   public readonly httpCode: number;
   public readonly message: string;
@@ -14,26 +16,26 @@ export class AppError extends Error {
   }
 
   static BadRequest(message: string) {
-    return new AppError(400, message);
+    return new AppError(httpStatus.BAD_REQUEST, message);
   }
 
   static Unauthorized(message = 'User is not authorized') {
-    return new AppError(401, message);
+    return new AppError(httpStatus.UNAUTHORIZED, message);
   }
 
   static NoPermission() {
-    return new AppError(403, 'User does not have access!');
+    return new AppError(httpStatus.FORBIDDEN, 'User does not have access!');
   }
 
   static NotFound(message: string) {
-    return new AppError(404, message);
+    return new AppError(httpStatus.NOT_FOUND, message);
   }
 
   static InternalServerError(message: string) {
-    return new AppError(500, message);
+    return new AppError(httpStatus.INTERNAL_SERVER_ERROR, message);
   }
 
   static ConflictError(message: string) {
-    return new AppError(409, message);
+    return new AppError(httpStatus.CONFLICT, message);
   }
 }

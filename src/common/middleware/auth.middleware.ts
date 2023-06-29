@@ -2,7 +2,7 @@ import { userLoginSchema, userSignUpSchema } from '../../auth/schemas/auth.schem
 import { RequestHandler } from 'express';
 import passport from 'passport';
 import { validateDTO } from '../utils';
-import { IAuthCredentialsDTO, TCreateUserDTO } from '../../models';
+import { IAuthCredentialsDTO, TCreateUserDTO } from '../../modules';
 
 export function validateLogInDTO() {
   return validateDTO<IAuthCredentialsDTO>(userLoginSchema);

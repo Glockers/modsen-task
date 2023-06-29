@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { meetupRouter } from '../../models/meetup/meetup.router';
-import { userRouter } from '../../models/user/user.router';
+import { meetupRouter } from '../../modules/meetup/meetup.router';
+import { userRouter } from '../../modules/user/user.router';
 import { authRouter } from '../../auth/auth.router';
-import { registerMeetupRouter } from '../../models/meetupRegistation/meetupRegistration.router';
+import { registerMeetupRouter } from '../../modules/meetupRegistation/meetupRegistration.router';
 
 const globalRouter = Router();
 

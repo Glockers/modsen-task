@@ -2,16 +2,17 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import express, { Application } from 'express';
 import cookieParser from 'cookie-parser';
-import { initDatabases } from './provider';
 import { passport } from './auth';
 import { appConfig } from './config';
 import { globalRouter } from './common/routes/globalRoute';
 import { AppError } from './common/exceptions';
 import { logErrors, errorHandler } from './common/middleware';
 import { swaggerDocs } from './common/utils';
+import { checkPostgressConnection } from './provider';
 
 const app: Application = express();
-initDatabases();
+
+checkPostgressConnection();
 
 app.use(cors());
 app.use(bodyParser.json());

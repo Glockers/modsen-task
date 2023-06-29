@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import * as MeetupController from './meetup.controller';
+import { meetupControoler } from './meetup.controller';
 import { authenticate, createMeetupValidationMiddleware, filterMeetupValidationMiddleware, hasRole, updateMeetupValidationMiddleware } from '../../common/middleware';
 import { validateQueryParams } from '../../common/utils';
 import { idNumberSchema } from '../../common/schemas';
-import { Role } from '../../common/interfaces';
+import { Role } from '../../common/types';
 
 const meetupRouter = Router();
 
@@ -27,7 +27,7 @@ const meetupRouter = Router();
   *       400:
   *        description: Bad request
 */
-meetupRouter.get('/', filterMeetupValidationMiddleware(), MeetupController.getAll);
+meetupRouter.get('/', filterMeetupValidationMiddleware(), meetupControoler.getAll);
 
 /**
   * @openapi
@@ -50,7 +50,7 @@ meetupRouter.get('/', filterMeetupValidationMiddleware(), MeetupController.getAl
   *       400:
   *        description: Bad request
 */
-meetupRouter.get('/:id', validateQueryParams(idNumberSchema), MeetupController.getOneById);
+meetupRouter.get('/:id', validateQueryParams(idNumberSchema), meetupControoler.getOneById);
 
 /**
   * @openapi
@@ -66,12 +66,12 @@ meetupRouter.get('/:id', validateQueryParams(idNumberSchema), MeetupController.g
   *           schema:
   *             $ref: '#/components/schemas/CreateMeetupSchema'
   *     responses:
-  *       200:
+  *       201:
   *         description: Success
   *       400:
   *        description: Bad request
 */
-meetupRouter.post('/', authenticate('access'), hasRole([Role.ADMIN]), createMeetupValidationMiddleware(), MeetupController.create);
+meetupRouter.post('/', authenticate('access'), hasRole([Role.ADMIN]), createMeetupValidationMiddleware(), meetupControoler.create);
 
 /**
   * @openapi
@@ -100,7 +100,7 @@ meetupRouter.post('/', authenticate('access'), hasRole([Role.ADMIN]), createMeet
   *       400:
   *        description: Bad request
 */
-meetupRouter.put('/:id', authenticate('access'), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), updateMeetupValidationMiddleware(), MeetupController.updateById);
+meetupRouter.put('/:id', authenticate('access'), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), updateMeetupValidationMiddleware(), meetupControoler.updateById);
 
 /**
   * @openapi
@@ -123,6 +123,6 @@ meetupRouter.put('/:id', authenticate('access'), hasRole([Role.ADMIN]), validate
   *       400:
   *        description: Bad request
 */
-meetupRouter.delete('/:id', authenticate('access'), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), MeetupController.deleteById);
+meetupRouter.delete('/:id', authenticate('access'), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), meetupControoler.deleteById);
 
 export { meetupRouter };

@@ -1,15 +1,15 @@
 import { IMeetupRegistration } from '.';
 import { MeetupRegistation } from './entities/meetupRegistation.entity';
 import { PostgresDataSource } from '../../provider/db/postgres';
-import { getMeetupById } from '../meetup/meetup.repository';
 import { findUserByLogin } from '../user/user.repository';
 import { AppError } from '../../common/exceptions/AppError';
+import { meetupRepository } from '../meetup/meetup.repository';
 
 const registrationRepository = PostgresDataSource.getRepository(MeetupRegistation);
 
 export const saveRegistationMeetup = async (login: string, meetupId: number): Promise<IMeetupRegistration> => {
   const user = await findUserByLogin(login);
-  const meetup = await getMeetupById(meetupId);
+  const meetup = await meetupRepository.getMeetupById(meetupId);
   if (!user || !meetup) {
     throw AppError.NotFound('meetup not found');
   }

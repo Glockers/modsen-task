@@ -1,6 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { AppError } from '../exceptions/AppError';
-import { Role } from '../interfaces';
+import { Role } from '../types';
 import { cookieExtractorAccessToken, validateJWTToken } from '../../auth';
 
 export const hasRole = (permissions: Array<Role>): RequestHandler => {

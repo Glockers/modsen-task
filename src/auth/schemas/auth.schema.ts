@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { IAuthCredentialsDTO, TCreateUserDTO } from '../../models';
+import { IAuthCredentialsDTO, TCreateUserDTO } from '../../modules';
 
 export const userLoginSchema = Joi.object<IAuthCredentialsDTO>({
   login: Joi.string().required(),
