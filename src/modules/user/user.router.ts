@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { getProfileController } from './user.controller';
 import { authenticate } from '../../common/middleware/auth.middleware';
+import { userController } from './user.controller';
 
 const userRouter = Router();
 
@@ -15,6 +15,6 @@ const userRouter = Router();
   *       200:
   *         description: App is up and running
 */
-userRouter.get('/profile', authenticate('access'), getProfileController);
+userRouter.get('/profile', authenticate('access'), userController.getProfileController);
 
 export { userRouter };
