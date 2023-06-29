@@ -1,14 +1,14 @@
 import { Application, Request, Response } from 'express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { swaggerUIOptions } from '../../config/swagger.config';
-import createLogger from './logger';
+import { createLogger } from './logger';
+import { swaggerUIOptions } from '../../config';
 
 const logger = createLogger(__filename);
 
 const swaggerSpec = swaggerJsdoc(swaggerUIOptions);
 
-function swaggerDocs(app: Application, port: number) {
+export function swaggerDocs(app: Application, port: number) {
   app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   app.get('/docs.json', (req: Request, res: Response) => {
@@ -18,5 +18,3 @@ function swaggerDocs(app: Application, port: number) {
 
   logger.info(`Docs available at http://localhost:${port}/docs`);
 }
-
-export default swaggerDocs;

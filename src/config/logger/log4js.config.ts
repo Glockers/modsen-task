@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import validateConfig from '../../common/utils/validateConfig';
+import { validateConfig } from '../../common/utils/validateConfig';
 
 interface ILoggerConfig {
   LOGGER_LEVEL: string,
@@ -11,5 +11,4 @@ const validationSchema = Joi.object<ILoggerConfig>({
   LOGGER_CONTEXT_NAME: Joi.string().default('context').required()
 }).unknown();
 
-const loggerConfig = validateConfig<ILoggerConfig>(validationSchema);
-export default loggerConfig;
+export const loggerConfig = validateConfig<ILoggerConfig>(validationSchema);

@@ -3,9 +3,9 @@ import { NextFunction, Request, Response } from 'express';
 import { catchAsyncFunction } from '../common/helpers/catchAsync';
 import { TValidatePayload } from '../common/utils';
 import { IUserDTO, IUserJWT, TCreateUserDTO } from '../models';
-import appConfig from '../config/app.config';
 import { logIn, signUp, validateJWTToken } from './auth.service';
 import { ITokenPair } from './interfaces/token.inteface';
+import { appConfig } from '../config';
 
 export const signUpController = catchAsyncFunction(async (req: TValidatePayload<TCreateUserDTO>, res: Response) => {
   const validationPayload = req.validatedPayload;

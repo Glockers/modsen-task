@@ -1,8 +1,8 @@
 import { userLoginSchema, userSignUpSchema } from '../../auth/schemas/auth.schema';
-import { IAuthCredentialsDTO, TCreateUserDTO } from '../../models';
-import { validateDTO } from '../utils/validateDTO';
 import { RequestHandler } from 'express';
 import passport from 'passport';
+import { validateDTO } from '../utils';
+import { IAuthCredentialsDTO, TCreateUserDTO } from '../../models';
 
 export function validateLogInDTO() {
   return validateDTO<IAuthCredentialsDTO>(userLoginSchema);

@@ -17,4 +17,4 @@ const userRouter = Router();
 */
 userRouter.get('/profile', authenticate('access'), getProfileController);
 
-export default userRouter;
+export { userRouter };

@@ -1,7 +1,7 @@
 import { Schema } from 'joi';
 import { NextFunction, Request, Response } from 'express';
-import { isEmptyObject } from '../helpers/objectUtils';
-import { AppError } from '../exceptions/AppError';
+import { isEmptyObject } from '../helpers';
+import { AppError } from '../exceptions';
 
 export type TValidatePayload<T> = Request & { validatedPayload?: T }
 

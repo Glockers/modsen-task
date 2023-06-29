@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { authenticate, checkAuth, validateLogInDTO, validateRegInDTO } from '../common';
 import { logOutController, loginController, refreshAccessToken, signUpController } from './auth.controller';
+import { authenticate, checkAuth, validateLogInDTO, validateRegInDTO } from '../common/middleware';
 
 const authRouter = Router();
 
@@ -88,4 +88,4 @@ authRouter.post('/refresh-tokens', authenticate('access'), refreshAccessToken);
 */
 authRouter.post('/logout', authenticate('access'), logOutController);
 
-export default authRouter;
+export { authRouter };

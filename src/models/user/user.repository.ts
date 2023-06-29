@@ -1,5 +1,5 @@
 import { IUserAttributes, IUserInput, User } from '..';
-import PostgresDataSource from '../../provider/db/postgres';
+import { PostgresDataSource } from '../../provider/db/postgres';
 
 const userRepositry = PostgresDataSource.getRepository(User);
 

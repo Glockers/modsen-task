@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import * as MeetupController from './meetup.controller';
-import { createValidationMiddleware, filderValidationMiddleware, updateValidationMiddleware } from '../../common/middleware/meetup.middleware';
-import { Role, authenticate, hasRole } from '../../common';
-import { validateQueryParams } from '../../common/utils/validateQueryParams';
-import { idNumberSchema } from '../../common/schemas/id.schema';
+import { authenticate, createMeetupValidationMiddleware, filterMeetupValidationMiddleware, hasRole, updateMeetupValidationMiddleware } from '../../common/middleware';
+import { validateQueryParams } from '../../common/utils';
+import { idNumberSchema } from '../../common/schemas';
+import { Role } from '../../common/interfaces';
 
 const meetupRouter = Router();
 
@@ -27,7 +27,7 @@ const meetupRouter = Router();
   *       400:
   *        description: Bad request
 */
-meetupRouter.get('/', filderValidationMiddleware(), MeetupController.getAll);
+meetupRouter.get('/', filterMeetupValidationMiddleware(), MeetupController.getAll);
 
 /**
   * @openapi
@@ -71,7 +71,7 @@ meetupRouter.get('/:id', validateQueryParams(idNumberSchema), MeetupController.g
   *       400:
   *        description: Bad request
 */
-meetupRouter.post('/', authenticate('access'), hasRole([Role.ADMIN]), createValidationMiddleware(), MeetupController.create);
+meetupRouter.post('/', authenticate('access'), hasRole([Role.ADMIN]), createMeetupValidationMiddleware(), MeetupController.create);
 
 /**
   * @openapi
@@ -100,7 +100,7 @@ meetupRouter.post('/', authenticate('access'), hasRole([Role.ADMIN]), createVali
   *       400:
   *        description: Bad request
 */
-meetupRouter.put('/:id', authenticate('access'), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), updateValidationMiddleware(), MeetupController.updateById);
+meetupRouter.put('/:id', authenticate('access'), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), updateMeetupValidationMiddleware(), MeetupController.updateById);
 
 /**
   * @openapi
@@ -125,4 +125,4 @@ meetupRouter.put('/:id', authenticate('access'), hasRole([Role.ADMIN]), validate
 */
 meetupRouter.delete('/:id', authenticate('access'), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), MeetupController.deleteById);
 
-export default meetupRouter;
+export { meetupRouter };

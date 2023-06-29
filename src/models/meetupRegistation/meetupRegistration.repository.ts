@@ -1,6 +1,6 @@
 import { IMeetupRegistration } from '.';
-import MeetupRegistation from './entities/meetupRegistation.entity';
-import PostgresDataSource from '../../provider/db/postgres';
+import { MeetupRegistation } from './entities/meetupRegistation.entity';
+import { PostgresDataSource } from '../../provider/db/postgres';
 import { getMeetupById } from '../meetup/meetup.repository';
 import { findUserByLogin } from '../user/user.repository';
 import { AppError } from '../../common/exceptions/AppError';

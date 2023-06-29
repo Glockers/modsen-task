@@ -1,6 +1,6 @@
 
 import Joi from 'joi';
-import validateConfig from '../common/utils/validateConfig';
+import { validateConfig } from '../common/utils/validateConfig';
 
 interface IAppConfig {
   APP_NODE_ENV: string,
@@ -15,4 +15,4 @@ const validationSchema = Joi.object<IAppConfig>({
   APP_PORT: Joi.number().default(8000).required()
 }).unknown();
 
-export default validateConfig<IAppConfig>(validationSchema);
+export const appConfig = validateConfig<IAppConfig>(validationSchema);

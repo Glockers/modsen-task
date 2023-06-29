@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { getAllRegisterOnMeetup, registerUserForMeetupController } from './meetupRegistration.controller';
-import { authenticate } from '../../common';
-import { validateQueryParams } from '../../common/utils/validateQueryParams';
-import { idNumberSchema } from '../../common/schemas/id.schema';
+import { validateQueryParams } from '../../common/utils';
+import { idNumberSchema } from '../../common/schemas';
+import { authenticate } from '../../common/middleware';
 
 const registerMeetupRouter = Router();
 
@@ -40,4 +40,4 @@ registerMeetupRouter.post('/:id', authenticate('access'), validateQueryParams(id
 */
 registerMeetupRouter.get('/', authenticate('access'), getAllRegisterOnMeetup);
 
-export default registerMeetupRouter;
+export { registerMeetupRouter };

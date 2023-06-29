@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { Strategy as JwtStrategy, VerifiedCallback, StrategyOptions } from 'passport-jwt';
 import { IAuthCredentialsDTO } from '../models';
-import jwtConfig from '../config/jwt.config';
+import { jwtConfig } from '../config/jwt.config';
 import { findUserByLogin } from '../models/user/user.repository';
 import { ITokenPair } from './interfaces/token.inteface';
 import passport from 'passport';
@@ -29,4 +29,4 @@ export const accessJWTStrategy = new JwtStrategy(jwtOptions, (payload: IAuthCred
 
 passport.use('access', accessJWTStrategy);
 
-export default passport;
+export { passport };

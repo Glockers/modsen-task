@@ -1,6 +1,6 @@
 import { IMeetupAttributes, IMeetupInput, Meetup, TFilterMeetupsDTO } from '..';
 import { AppError } from '../../common/exceptions/AppError';
-import PostgresDataSource from '../../provider/db/postgres';
+import { PostgresDataSource } from '../../provider/db/postgres';
 import { Like } from 'typeorm';
 
 const meetupRepository = PostgresDataSource.getRepository(Meetup);

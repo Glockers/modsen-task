@@ -1,15 +1,14 @@
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express, { Application } from 'express';
-import initDatabases from './provider/init';
-import routes from './common/routes';
 import cookieParser from 'cookie-parser';
-import { errorHandler } from './common/middleware/errorHandler.middleware';
-import { logErrors } from './common/middleware/loggerError.middleware';
-import { AppError } from './common/exceptions/AppError';
-import passport from './auth/access.strategy';
-import swaggerDocs from './common/utils/swagger';
-import appConfig from './config/app.config';
+import { initDatabases } from './provider';
+import { passport } from './auth';
+import { appConfig } from './config';
+import { globalRouter } from './common/routes/globalRoute';
+import { AppError } from './common/exceptions';
+import { logErrors, errorHandler } from './common/middleware';
+import { swaggerDocs } from './common/utils';
 
 const app: Application = express();
 initDatabases();
@@ -21,7 +20,7 @@ app.use(cookieParser());
 
 app.use(passport.initialize());
 
-app.use('/api/v1', routes);
+app.use('/api/v1', globalRouter);
 
 swaggerDocs(app, appConfig.APP_PORT);
 
@@ -32,4 +31,4 @@ app.all('*', (req, res, next) => {
 app.use(logErrors);
 app.use(errorHandler);
 
-export default app;
+export { app };

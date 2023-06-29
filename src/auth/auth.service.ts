@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
 import { IAuthCredentialsDTO, IUserInput, IUserJWT, TCreateUserDTO } from '../models';
-import jwtConfig from '../config/jwt.config';
+import { jwtConfig } from '../config/jwt.config';
 import { AppError } from '../common/exceptions/AppError';
 import { createUser, findUserByLogin } from '../models/user/user.repository';
-import { Role } from '../common';
+import { Role } from '../common/interfaces';
 
 export const signUp = async (payload: TCreateUserDTO) => {
   const selectedUser = await findUserByLogin(payload.login);

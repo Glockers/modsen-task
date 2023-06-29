@@ -1,6 +1,6 @@
 import { AppError } from '../common/exceptions/AppError';
-import createLogger from '../common/utils/logger';
-import PostgresDataSource from './db/postgres';
+import { createLogger } from '../common/utils';
+import { PostgresDataSource } from './db/postgres';
 
 const logger = createLogger(__filename);
 
@@ -18,4 +18,4 @@ const initDatabases = () => Promise.all([
   checkPostgressConnection()
 ]);
 
-export default initDatabases;
+export { initDatabases };

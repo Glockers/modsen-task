@@ -13,6 +13,7 @@ export const hasRole = (permissions: Array<Role>): RequestHandler => {
     }
   };
 };
+
 export const checkAuth = (isAuth: boolean, errorMessage = 'Проблема с авторизацией') => {
   return (req: Request, res: Response, next: NextFunction) => {
     const sessionUser = validateJWTToken(cookieExtractorAccessToken(req), 'access');

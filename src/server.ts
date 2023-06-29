@@ -1,7 +1,7 @@
 import 'dotenv/config';
-import app from './app';
-import appConfig from './config/app.config';
-import createLogger from './common/utils/logger';
+import { app } from './app';
+import { appConfig } from './config';
+import { createLogger } from './common/utils';
 
 const logger = createLogger(__filename);
 

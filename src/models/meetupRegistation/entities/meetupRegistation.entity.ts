@@ -21,4 +21,4 @@ class MeetupRegistation implements IMeetupRegistration {
   public registrationDate!: Date;
 }
 
-export default MeetupRegistation;
+export { MeetupRegistation };

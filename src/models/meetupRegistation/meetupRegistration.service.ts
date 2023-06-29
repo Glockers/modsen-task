@@ -1,4 +1,4 @@
-import { IDatabaseResponse } from '../../common';
+import { IDatabaseResponse } from '../../common/interfaces';
 import { IUserJWT } from '../user';
 import { IMeetupRegistration } from './interfaces/meetupRegistration.interface';
 import { getAllmeetupRegistration, saveRegistationMeetup } from './meetupRegistration.repository';
