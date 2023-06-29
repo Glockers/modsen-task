@@ -1,18 +1,27 @@
+import { Repository } from 'typeorm';
 import { IUserAttributes, IUserInput, User } from '..';
 import { PostgresDataSource } from '../../provider/db/postgres';
 
-const userRepositry = PostgresDataSource.getRepository(User);
+class UserRepository {
+  private repository: Repository<User>;
 
-export const createUser = async (user: IUserInput): Promise<IUserInput> => {
-  return userRepositry.save(user);
-};
+  constructor() {
+    this.repository = PostgresDataSource.getRepository(User);
+  }
 
-export const findUserByLogin = async (login: string): Promise<IUserAttributes | null> => {
-  const selectedUser = userRepositry.findOneBy({
-    login
-  });
+  public createUser = async (user: IUserInput): Promise<IUserInput> => {
+    return this.repository.save(user);
+  };
 
-  if (!selectedUser) return null;
+  public findUserByLogin = async (login: string): Promise<IUserAttributes | null> => {
+    const selectedUser = this.repository.findOneBy({
+      login
+    });
 
-  return selectedUser;
-};
+    if (!selectedUser) return null;
+
+    return selectedUser;
+  };
+}
+
+export const userRepository = new UserRepository();

@@ -1,13 +1,13 @@
 import jwt from 'jsonwebtoken';
 import { IAuthCredentialsDTO, IUserInput, IUserJWT, TCreateUserDTO } from '../modules';
 
-import { createUser, findUserByLogin } from '../modules/user/user.repository';
 import { Role, httpStatus } from '../common/types';
 import { AppError } from '../common/exceptions';
 import { jwtConfig } from '../config';
+import { userRepository } from '../modules/user/user.repository';
 
 export const signUp = async (payload: TCreateUserDTO) => {
-  const selectedUser = await findUserByLogin(payload.login);
+  const selectedUser = await userRepository.findUserByLogin(payload.login);
   if (selectedUser) {
     throw AppError.ConflictError('such user already exists');
   }
@@ -17,12 +17,12 @@ export const signUp = async (payload: TCreateUserDTO) => {
     password: payload.password,
     role: Role.USER
   };
-  await createUser(newUser);
+  await userRepository.createUser(newUser);
   return { data: 'Registration completed successfully', status: httpStatus.CREATED };
 };
 
 export const logIn = async (payload: IAuthCredentialsDTO) => {
-  const selectedUser = await findUserByLogin(payload.login);
+  const selectedUser = await userRepository.findUserByLogin(payload.login);
   if (!selectedUser || selectedUser.password !== payload.password) {
     throw AppError.Unauthorized('Invalid login or password');
   }

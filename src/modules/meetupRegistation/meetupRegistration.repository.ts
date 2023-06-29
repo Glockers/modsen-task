@@ -1,36 +1,37 @@
 import { IMeetupRegistration } from '.';
 import { MeetupRegistation } from './entities/meetupRegistation.entity';
 import { PostgresDataSource } from '../../provider/db/postgres';
-import { findUserByLogin } from '../user/user.repository';
-import { AppError } from '../../common/exceptions/AppError';
-import { meetupRepository } from '../meetup/meetup.repository';
+import { Repository } from 'typeorm';
 
-const registrationRepository = PostgresDataSource.getRepository(MeetupRegistation);
+class MeetupRegistrationRepository {
+  private repository: Repository<MeetupRegistation>;
 
-export const saveRegistationMeetup = async (login: string, meetupId: number): Promise<IMeetupRegistration> => {
-  const user = await findUserByLogin(login);
-  const meetup = await meetupRepository.getMeetupById(meetupId);
-  if (!user || !meetup) {
-    throw AppError.NotFound('meetup not found');
+  constructor() {
+    this.repository = PostgresDataSource.getRepository(MeetupRegistation);
   }
-  const registration = new MeetupRegistation();
-  registration.user = user;
-  registration.meetup = meetup;
 
-  return registrationRepository.save(registration);
-};
+  public saveRegistationMeetup = async (registration: MeetupRegistation): Promise<IMeetupRegistration> => {
+    return this.repository.save(registration);
+  };
 
-export const getAllmeetupRegistration = async (): Promise<Array<IMeetupRegistration>> => {
-  return registrationRepository.find({
-    select: {
-      user: {
-        id: true,
-        login: true
+  // public const getRegistrationById = async (): Promise<IMeetupRegistration> => {
+
+  // };
+
+  public getAllmeetupRegistration = async (): Promise<Array<IMeetupRegistration>> => {
+    return this.repository.find({
+      select: {
+        user: {
+          id: true,
+          login: true
+        }
+      },
+      relations: {
+        meetup: true,
+        user: true
       }
-    },
-    relations: {
-      meetup: true,
-      user: true
-    }
-  });
-};
+    });
+  };
+}
+
+export const meetupRegistrationRepository = new MeetupRegistrationRepository();

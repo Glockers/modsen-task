@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { getAllRegisterOnMeetup, registerUserForMeetupController } from './meetupRegistration.controller';
 import { validateQueryParams } from '../../common/utils';
 import { idNumberSchema } from '../../common/schemas';
 import { authenticate } from '../../common/middleware';
+import { meetupRegistrationController } from './meetupRegistration.controller';
 
 const registerMeetupRouter = Router();
 
@@ -25,7 +25,7 @@ const registerMeetupRouter = Router();
   *       200:
   *         description: App is up and running
 */
-registerMeetupRouter.post('/:id', authenticate('access'), validateQueryParams(idNumberSchema), registerUserForMeetupController);
+registerMeetupRouter.post('/:id', authenticate('access'), validateQueryParams(idNumberSchema), meetupRegistrationController.registerUserForMeetupController);
 
 /**
   * @openapi
@@ -38,6 +38,6 @@ registerMeetupRouter.post('/:id', authenticate('access'), validateQueryParams(id
   *       200:
   *         description: App is up and running
 */
-registerMeetupRouter.get('/', authenticate('access'), getAllRegisterOnMeetup);
+registerMeetupRouter.get('/', authenticate('access'), meetupRegistrationController.getAllRegisterOnMeetup);
 
 export { registerMeetupRouter };
