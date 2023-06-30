@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import validateConfig from '../common/utils/validateConfig';
+import { validateConfig } from '../common/utils/validateConfig';
 
 interface IPostgreConfig {
   TYPEORM_HOST: string,
@@ -20,5 +20,4 @@ const validationSchema = Joi.object<IPostgreConfig>({
   TYPEORM_CONNECTION: Joi.string().default('postgres').required()
 }).unknown();
 
-const typeormConfig = validateConfig<IPostgreConfig>(validationSchema);
-export default typeormConfig;
+export const typeormConfig = validateConfig<IPostgreConfig>(validationSchema);

@@ -1,4 +1,4 @@
-import loggerConfig from './log4js.config';
+import { loggerConfig } from './log4js.config';
 
 const configLogger = {
   appenders: {
