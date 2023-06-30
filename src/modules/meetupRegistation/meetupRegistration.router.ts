@@ -3,6 +3,8 @@ import { validateQueryParams } from '../../common/utils';
 import { idNumberSchema } from '../../common/schemas';
 import { authenticate } from '../../common/middleware';
 import { meetupRegistrationController } from './meetupRegistration.controller';
+import { EAuthMessageError } from '../../common/types/authMessageError';
+import { JWTStrategy } from '../../common/types/strategy.enum';
 
 const registerMeetupRouter = Router();
 
@@ -25,7 +27,7 @@ const registerMeetupRouter = Router();
   *       200:
   *         description: App is up and running
 */
-registerMeetupRouter.post('/:id', authenticate('access'), validateQueryParams(idNumberSchema), meetupRegistrationController.registerUserForMeetupController);
+registerMeetupRouter.post('/:id', authenticate(JWTStrategy.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), validateQueryParams(idNumberSchema), meetupRegistrationController.registerUserForMeetupController);
 
 /**
   * @openapi
@@ -38,6 +40,6 @@ registerMeetupRouter.post('/:id', authenticate('access'), validateQueryParams(id
   *       200:
   *         description: App is up and running
 */
-registerMeetupRouter.get('/', authenticate('access'), meetupRegistrationController.getAllRegisterOnMeetup);
+registerMeetupRouter.get('/', authenticate(JWTStrategy.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), meetupRegistrationController.getAllRegisterOnMeetup);
 
 export { registerMeetupRouter };

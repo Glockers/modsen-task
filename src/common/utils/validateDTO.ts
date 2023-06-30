@@ -1,6 +1,5 @@
 import { Schema } from 'joi';
 import { NextFunction, Request, Response } from 'express';
-import { isEmptyObject } from '../helpers';
 import { AppError } from '../exceptions';
 
 export type TValidatePayload<T> = Request & { validatedPayload?: T }
@@ -8,7 +7,7 @@ export type TValidatePayload<T> = Request & { validatedPayload?: T }
 export function validateDTO<TPayload extends object>(schema: Schema<TPayload>, isEmpty = false) {
   return function validateMiddleware(req: TValidatePayload<TPayload>, res: Response, next: NextFunction) {
     const payload: TPayload = req.body;
-    if (isEmptyObject(payload) && !isEmpty) {
+    if (!isEmpty && !payload) {
       next(AppError.BadRequest('Ничего не введено'));
     }
     const validationResult = schema.validate(payload);

@@ -1,6 +1,8 @@
 import { Router } from 'express';
-import { logOutController, loginController, refreshAccessToken, signUpController } from './auth.controller';
 import { authenticate, checkAuth, validateLogInDTO, validateRegInDTO } from '../common/middleware';
+import { EAuthMessageError } from '../common/types/authMessageError';
+import { JWTStrategy } from '../common/types/strategy.enum';
+import { authController } from './auth.controller';
 
 const authRouter = Router();
 
@@ -27,7 +29,7 @@ const authRouter = Router();
  *       500:
  *        description: Internal server error
 */
-authRouter.post('/login', validateLogInDTO(), checkAuth(false, 'Вы уже авторизованы'), loginController);
+authRouter.post('/login', validateLogInDTO(), checkAuth(false, 'Вы уже авторизованы'), authController.loginController);
 
 /**
   * @openapi
@@ -52,7 +54,7 @@ authRouter.post('/login', validateLogInDTO(), checkAuth(false, 'Вы уже ав
   *       500:
   *        description: Internal server error
 */
-authRouter.post('/signup', validateRegInDTO(), checkAuth(false, 'Вы уже авторизованы'), signUpController);
+authRouter.post('/signup', validateRegInDTO(), checkAuth(false, 'Вы уже авторизованы'), authController.signUpController);
 
 /**
   * @openapi
@@ -69,7 +71,7 @@ authRouter.post('/signup', validateRegInDTO(), checkAuth(false, 'Вы уже а�
   *       500:
   *        description: Internal server error
 */
-authRouter.post('/refresh-tokens', authenticate('access'), refreshAccessToken);
+authRouter.post('/refresh-tokens', authenticate(JWTStrategy.REFRESH_JWT_STRATEGY, EAuthMessageError.INVALID_REFRESH_TOKEN), authController.refreshAccessToken);
 
 /**
   * @openapi
@@ -86,6 +88,6 @@ authRouter.post('/refresh-tokens', authenticate('access'), refreshAccessToken);
   *       500:
   *        description: Internal server error
 */
-authRouter.post('/logout', authenticate('access'), logOutController);
+authRouter.post('/logout', authenticate(JWTStrategy.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), authController.logOutController);
 
 export { authRouter };

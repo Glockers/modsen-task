@@ -3,6 +3,9 @@ import { RequestHandler } from 'express';
 import passport from 'passport';
 import { validateDTO } from '../utils';
 import { IAuthCredentialsDTO, TCreateUserDTO } from '../../modules';
+import { httpStatus } from '../types';
+import { EAuthMessageError } from '../types/authMessageError';
+import { JWTStrategy } from '../types/strategy.enum';
 
 export function validateLogInDTO() {
   return validateDTO<IAuthCredentialsDTO>(userLoginSchema);
@@ -12,6 +15,16 @@ export function validateRegInDTO() {
   return validateDTO<TCreateUserDTO>(userSignUpSchema);
 }
 
-export function authenticate(stratagy: string): RequestHandler {
-  return passport.authenticate('access', { session: false });
+export function authenticate(strategy: JWTStrategy, messageError: EAuthMessageError): RequestHandler {
+  return (req, res, next) => {
+    passport.authenticate(strategy, { session: false }, (err, user, info) => {
+      if (err) {
+        return next(err);
+      }
+      if (!user) {
+        return res.status(httpStatus.UNAUTHORIZED).json({ status: httpStatus.UNAUTHORIZED, error: messageError });
+      }
+      return next();
+    })(req, res, next);
+  };
 }

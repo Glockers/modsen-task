@@ -1,35 +1,27 @@
-import bodyParser from 'body-parser';
-import cors from 'cors';
 import express, { Application } from 'express';
-import cookieParser from 'cookie-parser';
-import { passport } from './auth';
-import { appConfig } from './config';
-import { globalRouter } from './common/routes/globalRoute';
+import { initRoutes } from './common/routes/initRoutes';
 import { AppError } from './common/exceptions';
-import { logErrors, errorHandler } from './common/middleware';
-import { swaggerDocs } from './common/utils';
-import { checkPostgressConnection } from './provider';
+import { checkPostgressConnection as initDatabase } from './infra';
+import { initMiddlewares } from './common/middleware/initMiddleware';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 
 const app: Application = express();
 
-checkPostgressConnection();
+initDatabase();
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use(passport.initialize());
+initRoutes(app);
 
-app.use('/api/v1', globalRouter);
-
-swaggerDocs(app, appConfig.APP_PORT);
+initMiddlewares(app);
 
 app.all('*', (req, res, next) => {
   next(AppError.NotFound(`Cant find ${req.originalUrl} on this server!`));
 });
-
-app.use(logErrors);
-app.use(errorHandler);
 
 export { app };

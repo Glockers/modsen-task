@@ -10,6 +10,7 @@ interface IPostgreConfig {
   TYPEORM_SYNCHRONIZE: boolean,
   TYPEORM_LOGGING: boolean,
 }
+
 const validationSchema = Joi.object<IPostgreConfig>({
   TYPEORM_DATABASE: Joi.string().required(),
   TYPEORM_HOST: Joi.string().default('http://localhost').required(),

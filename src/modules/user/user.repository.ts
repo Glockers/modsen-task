@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import { IUserAttributes, IUserInput, User } from '..';
-import { PostgresDataSource } from '../../provider/db/postgres';
+import { PostgresDataSource } from '../../infra/db/postgres';
 
 class UserRepository {
   private repository: Repository<User>;
@@ -9,7 +9,7 @@ class UserRepository {
     this.repository = PostgresDataSource.getRepository(User);
   }
 
-  public createUser = async (user: IUserInput): Promise<IUserInput> => {
+  public createUser = async (user: IUserInput): Promise<IUserAttributes> => {
     return this.repository.save(user);
   };
 

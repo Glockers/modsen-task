@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { authenticate } from '../../common/middleware/auth.middleware';
 import { userController } from './user.controller';
+import { EAuthMessageError } from '../../common/types/authMessageError';
+import { JWTStrategy } from '../../common/types/strategy.enum';
 
 const userRouter = Router();
 
@@ -15,6 +17,6 @@ const userRouter = Router();
   *       200:
   *         description: App is up and running
 */
-userRouter.get('/profile', authenticate('access'), userController.getProfileController);
+userRouter.get('/profile', authenticate(JWTStrategy.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), userController.getProfileController);
 
 export { userRouter };

@@ -1,6 +1,6 @@
-import { AppError } from '../common/exceptions/AppError';
-import { createLogger } from '../common/utils';
-import { PostgresDataSource } from './db/postgres';
+import { AppError } from '../../common/exceptions/AppError';
+import { createLogger } from '../../common/utils';
+import { PostgresDataSource } from './postgres';
 
 const logger = createLogger(__filename);
 

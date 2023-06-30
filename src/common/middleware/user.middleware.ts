@@ -1,11 +1,11 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { AppError } from '../exceptions/AppError';
 import { Role } from '../types';
-import { cookieExtractorAccessToken, validateJWTToken } from '../../auth';
+import { authService, extractAccessToken } from '../../auth';
 
 export const hasRole = (permissions: Array<Role>): RequestHandler => {
   return (req: Request, res: Response, next: NextFunction): void => {
-    const sessionUser = validateJWTToken(cookieExtractorAccessToken(req), 'access');
+    const sessionUser = authService.verifyJWTToken(extractAccessToken(req), 'access');
     if (permissions.includes(sessionUser.role)) {
       next();
     } else {
@@ -16,7 +16,7 @@ export const hasRole = (permissions: Array<Role>): RequestHandler => {
 
 export const checkAuth = (isAuth: boolean, errorMessage = 'Проблема с авторизацией') => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const sessionUser = validateJWTToken(cookieExtractorAccessToken(req), 'access');
+    const sessionUser = authService.verifyJWTToken(extractAccessToken(req), 'access');
     if (sessionUser === null && !isAuth) {
       next();
     } else {

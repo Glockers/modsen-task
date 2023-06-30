@@ -1,4 +1,4 @@
-import { PostgresDataSource } from '../../provider/db/postgres';
+import { PostgresDataSource } from '../../infra/db/postgres';
 import { Like, Repository } from 'typeorm';
 import { Meetup } from './entities/meetup.entity';
 import { IMeetupAttributes, IMeetupInput, TFilterMeetupsDTO } from './interfaces';
@@ -22,7 +22,6 @@ class MeetupRepository {
     const meetup = await this.repository.findOneBy({
       id: meetupId
     });
-    console.log(meetup);
 
     return meetup;
   };
