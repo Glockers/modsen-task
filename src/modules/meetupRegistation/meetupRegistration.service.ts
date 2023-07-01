@@ -1,24 +1,31 @@
+import { Inject, Service } from 'typedi';
 import { AppError } from '../../common/exceptions';
-import { IDatabaseResponse, httpStatus } from '../../common/types';
-import { meetupRepository } from '../meetup/meetup.repository';
 import { IUserJWT } from '../user';
-import { userRepository } from '../user/user.repository';
 import { MeetupRegistation } from './entities/meetupRegistation.entity';
 import { IMeetupRegistration } from './interfaces/meetupRegistration.interface';
-import { meetupRegistrationRepository } from './meetupRegistration.repository';
+import { MeetupRepository } from '../meetup/meetup.repository';
+import { UserRepository } from '../user/user.repository';
+import { MeetupRegistrationRepository } from './meetupRegistration.repository';
 
-class MeetupRegistrationService {
-  public getAllService = async (): Promise<IDatabaseResponse<Array<IMeetupRegistration>>> => {
-    const res = await meetupRegistrationRepository.getAllmeetupRegistration();
-    return {
-      data: res,
-      status: httpStatus.OK
-    };
+@Service()
+export class MeetupRegistrationService {
+  @Inject()
+  public readonly meetupRepository: MeetupRepository;
+
+  @Inject()
+  private readonly userRepository: UserRepository;
+
+  @Inject()
+  private readonly meetupRegistrationRepository: MeetupRegistrationRepository;
+
+  public getAllService = async (): Promise<Array<IMeetupRegistration>> => {
+    const services = await this.meetupRegistrationRepository.getAllmeetupRegistration();
+    return services;
   };
 
-  public registerUserForMeetupService = async (user: IUserJWT, meetupId: number): Promise<IDatabaseResponse<IMeetupRegistration>> => {
-    const selectedUser = await userRepository.findUserByLogin(user.login);
-    const meetup = await meetupRepository.getMeetupById(meetupId);
+  public registerUserForMeetupService = async (user: IUserJWT, meetupId: number): Promise<IMeetupRegistration> => {
+    const selectedUser = await this.userRepository.findUserByLogin(user.login);
+    const meetup = await this.meetupRepository.getMeetupById(meetupId);
     if (!selectedUser || !meetup) {
       throw AppError.NotFound('meetup not found');
     }
@@ -26,12 +33,7 @@ class MeetupRegistrationService {
     registration.user = selectedUser;
     registration.meetup = meetup;
 
-    const res = await meetupRegistrationRepository.saveRegistationMeetup(registration);
-    return {
-      data: res,
-      status: httpStatus.CREATED
-    };
+    const res = await this.meetupRegistrationRepository.saveRegistationMeetup(registration);
+    return res;
   };
 }
-
-export const meetupRegistrationService = new MeetupRegistrationService();

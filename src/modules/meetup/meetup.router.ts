@@ -1,13 +1,15 @@
 import { Router } from 'express';
-import { meetupControoler } from './meetup.controller';
 import { authenticate, createMeetupValidationMiddleware, filterMeetupValidationMiddleware, hasRole, updateMeetupValidationMiddleware } from '../../common/middleware';
 import { validateQueryParams } from '../../common/utils';
 import { idNumberSchema } from '../../common/schemas';
 import { Role } from '../../common/types';
 import { EAuthMessageError } from '../../common/types/authMessageError';
 import { JwtStrategyType } from '../../common/types/strategy.enum';
+import Container from 'typedi';
+import { MeetupController } from './meetup.controller';
 
 const meetupRouter = Router();
+const meetupControoler = Container.get(MeetupController);
 
 /**
   * @openapi
@@ -73,7 +75,7 @@ meetupRouter.get('/:id', validateQueryParams(idNumberSchema), meetupControoler.g
   *       400:
   *        description: Bad request
 */
-meetupRouter.post('/', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), hasRole([Role.USER]), createMeetupValidationMiddleware(), meetupControoler.create);
+meetupRouter.post('/', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), hasRole([Role.ADMIN]), createMeetupValidationMiddleware(), meetupControoler.create);
 
 /**
   * @openapi

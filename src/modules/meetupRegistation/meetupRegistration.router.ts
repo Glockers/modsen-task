@@ -2,11 +2,13 @@ import { Router } from 'express';
 import { validateQueryParams } from '../../common/utils';
 import { idNumberSchema } from '../../common/schemas';
 import { authenticate } from '../../common/middleware';
-import { meetupRegistrationController } from './meetupRegistration.controller';
 import { EAuthMessageError } from '../../common/types/authMessageError';
 import { JwtStrategyType } from '../../common/types/strategy.enum';
+import Container from 'typedi';
+import { MeetupRegistrationController } from './meetupRegistration.controller';
 
 const registerMeetupRouter = Router();
+const meetupRegistrationController = Container.get(MeetupRegistrationController);
 
 /**
   * @openapi

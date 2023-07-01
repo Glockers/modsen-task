@@ -3,14 +3,19 @@ import { IAuthCredentialsDTO, IUserAttributes, IUserInput, IUserJWT, TCreateUser
 import { Role } from '../common/types';
 import { AppError } from '../common/exceptions';
 import { jwtConfig } from '../config';
-import { userRepository } from '../modules/user/user.repository';
 import { VerifiedCallback } from 'passport-jwt';
 import { ITokenPair } from './interfaces/token.inteface';
 import { EAuthMessageError } from '../common/types/authMessageError';
+import { Inject, Service } from 'typedi';
+import { UserRepository } from '../modules/user/user.repository';
 
-class AuthService {
+@Service()
+export class AuthService {
+  @Inject()
+  private userRepository: UserRepository;
+
   public signUp = async (payload: TCreateUserDTO): Promise<IUserAttributes> => {
-    const selectedUser = await userRepository.findUserByLogin(payload.login);
+    const selectedUser = await this.userRepository.findUserByLogin(payload.login);
     if (selectedUser) {
       throw AppError.ConflictError('such user already exists');
     }
@@ -21,11 +26,11 @@ class AuthService {
       role: Role.USER
     };
 
-    return userRepository.createUser(newUser);
+    return this.userRepository.createUser(newUser);
   };
 
   public logIn = async (payload: IAuthCredentialsDTO): Promise<ITokenPair> => {
-    const selectedUser = await userRepository.findUserByLogin(payload.login);
+    const selectedUser = await this.userRepository.findUserByLogin(payload.login);
     if (!selectedUser || selectedUser.password !== payload.password) {
       throw AppError.Unauthorized('Invalid login or password');
     }
@@ -44,7 +49,16 @@ class AuthService {
     return { accessToken, refreshToken };
   }
 
+  public validateJWTToken = (payload: IAuthCredentialsDTO, done: VerifiedCallback): void => {
+    if (this.userRepository.findUserByLogin(payload.login)) {
+      done(null, payload);
+    } else {
+      done(EAuthMessageError.UNAUTHORIZED, false);
+    }
+  };
+
   public verifyJWTToken(token: string, type: 'access' | 'refresh'): IUserJWT | null {
+    console.log(this.userRepository);
     try {
       const data = jwt.verify(token, type === 'access' ? jwtConfig.JWT_ACCESS_SECRET : jwtConfig.JWT_REFRESH_SECRET) as IUserJWT;
       return data;
@@ -52,14 +66,4 @@ class AuthService {
       return null;
     }
   }
-
-  public validateJWTToken(payload: IAuthCredentialsDTO, done: VerifiedCallback): void {
-    if (userRepository.findUserByLogin(payload.login)) {
-      done(null, payload);
-    } else {
-      done(EAuthMessageError.UNAUTHORIZED, false);
-    }
-  }
 }
-
-export const authService = new AuthService();

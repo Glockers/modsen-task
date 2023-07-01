@@ -1,8 +1,11 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { AppError } from '../exceptions/AppError';
 import { Role } from '../types';
-import { authService, extractTokenFromCookies } from '../../auth';
+import { AuthService, extractTokenFromCookies } from '../../auth';
 import { JwtStrategyType } from '../types/strategy.enum';
+import Container from 'typedi';
+
+const authService = Container.get(AuthService);
 
 export const hasRole = (permissions: Array<Role>): RequestHandler => {
   return (req: Request, res: Response, next: NextFunction): void => {

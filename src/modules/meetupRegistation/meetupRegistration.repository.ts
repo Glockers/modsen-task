@@ -1,9 +1,11 @@
+import { Service } from 'typedi';
 import { IMeetupRegistration } from '.';
 import { MeetupRegistation } from './entities/meetupRegistation.entity';
 import { PostgresDataSource } from '../../infra/db/postgres';
 import { Repository } from 'typeorm';
 
-class MeetupRegistrationRepository {
+@Service()
+export class MeetupRegistrationRepository {
   private repository: Repository<MeetupRegistation>;
 
   constructor() {
@@ -13,10 +15,6 @@ class MeetupRegistrationRepository {
   public saveRegistationMeetup = async (registration: MeetupRegistation): Promise<IMeetupRegistration> => {
     return this.repository.save(registration);
   };
-
-  // public const getRegistrationById = async (): Promise<IMeetupRegistration> => {
-
-  // };
 
   public getAllmeetupRegistration = async (): Promise<Array<IMeetupRegistration>> => {
     return this.repository.find({
@@ -33,5 +31,3 @@ class MeetupRegistrationRepository {
     });
   };
 }
-
-export const meetupRegistrationRepository = new MeetupRegistrationRepository();

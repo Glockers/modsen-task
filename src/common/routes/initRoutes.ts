@@ -4,7 +4,7 @@ import { userRouter } from '../../modules/user/user.router';
 import { authRouter } from '../../auth/auth.router';
 import { registerMeetupRouter } from '../../modules/meetupRegistation/meetupRegistration.router';
 
-export const initRoutes = (app: Application): void => {
+export const useRoutes = (app: Application): void => {
   const globalRouter = Router();
 
   globalRouter.use('/meetup', meetupRouter);

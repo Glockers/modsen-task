@@ -1,5 +1,6 @@
+import 'reflect-metadata';
 import express, { Application } from 'express';
-import { initRoutes } from './common/routes/initRoutes';
+import { useRoutes } from './common/routes/initRoutes';
 import { checkPostgressConnection as initDatabase } from './infra';
 import { initMiddlewares } from './common/middleware/initMiddleware';
 import cors from 'cors';
@@ -15,7 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-initRoutes(app);
+useRoutes(app);
 
 initMiddlewares(app);
 

@@ -2,8 +2,10 @@ import { PostgresDataSource } from '../../infra/db/postgres';
 import { Like, Repository } from 'typeorm';
 import { Meetup } from './entities/meetup.entity';
 import { IMeetupAttributes, IMeetupInput, TFilterMeetupsDTO } from './interfaces';
+import { Service } from 'typedi';
 
-class MeetupRepository {
+@Service()
+export class MeetupRepository {
   private repository: Repository<Meetup>;
 
   constructor() {
@@ -66,5 +68,3 @@ class MeetupRepository {
     return this.repository.find(queryOptions);
   };
 }
-
-export const meetupRepository = new MeetupRepository();

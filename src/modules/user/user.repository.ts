@@ -1,8 +1,10 @@
 import { Repository } from 'typeorm';
 import { IUserAttributes, IUserInput, User } from '..';
 import { PostgresDataSource } from '../../infra/db/postgres';
+import { Service } from 'typedi';
 
-class UserRepository {
+@Service()
+export class UserRepository {
   private repository: Repository<User>;
 
   constructor() {
@@ -23,5 +25,3 @@ class UserRepository {
     return selectedUser;
   };
 }
-
-export const userRepository = new UserRepository();

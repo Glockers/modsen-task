@@ -2,9 +2,11 @@ import { Router } from 'express';
 import { authenticate, checkAuth, validateLogInDTO, validateRegInDTO } from '../common/middleware';
 import { EAuthMessageError } from '../common/types/authMessageError';
 import { JwtStrategyType } from '../common/types/strategy.enum';
-import { authController } from './auth.controller';
+import Container from 'typedi';
+import { AuthController } from './auth.controller';
 
 const authRouter = Router();
+const authController = Container.get(AuthController);
 
 /**
  * @openapi

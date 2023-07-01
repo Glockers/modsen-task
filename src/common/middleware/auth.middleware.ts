@@ -24,6 +24,7 @@ export function authenticate(strategy: JwtStrategyType, messageError: EAuthMessa
       if (!user) {
         return res.status(httpStatus.UNAUTHORIZED).json({ status: httpStatus.UNAUTHORIZED, error: messageError });
       }
+
       return next();
     })(req, res, next);
   };

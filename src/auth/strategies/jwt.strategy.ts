@@ -2,12 +2,14 @@ import { Request } from 'express';
 import { Strategy as JwtStrategy, StrategyOptions } from 'passport-jwt';
 import { jwtConfig } from '../../config/jwt.config';
 import { ITokenPair } from '../interfaces/token.inteface';
-import { authService } from '../auth.service';
 import { JwtStrategyType } from '../../common/types/strategy.enum';
+import { AuthService } from '../auth.service';
+import Container from 'typedi';
+
+const authService = Container.get(AuthService);
 
 export function extractTokenFromCookies(req: Request, typeStrategy: JwtStrategyType): string | null {
   const tokens: ITokenPair | undefined = req.cookies?.jwt_tokens;
-
   if (req && tokens) {
     return typeStrategy === JwtStrategyType.ACCESS_JWT_STRATEGY ? tokens.accessToken : tokens.refreshToken;
   }
