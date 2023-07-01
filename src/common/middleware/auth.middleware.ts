@@ -5,7 +5,7 @@ import { validateDTO } from '../utils';
 import { IAuthCredentialsDTO, TCreateUserDTO } from '../../modules';
 import { httpStatus } from '../types';
 import { EAuthMessageError } from '../types/authMessageError';
-import { JWTStrategy } from '../types/strategy.enum';
+import { JwtStrategyType } from '../types/strategy.enum';
 
 export function validateLogInDTO() {
   return validateDTO<IAuthCredentialsDTO>(userLoginSchema);
@@ -15,7 +15,7 @@ export function validateRegInDTO() {
   return validateDTO<TCreateUserDTO>(userSignUpSchema);
 }
 
-export function authenticate(strategy: JWTStrategy, messageError: EAuthMessageError): RequestHandler {
+export function authenticate(strategy: JwtStrategyType, messageError: EAuthMessageError): RequestHandler {
   return (req, res, next) => {
     passport.authenticate(strategy, { session: false }, (err, user, info) => {
       if (err) {
