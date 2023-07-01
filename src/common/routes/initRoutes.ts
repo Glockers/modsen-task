@@ -11,6 +11,5 @@ export const initRoutes = (app: Application): void => {
   globalRouter.use('/user', userRouter);
   globalRouter.use('/auth', authRouter);
   globalRouter.use('/subscribe', registerMeetupRouter);
-
   app.use('/api/v1', globalRouter);
 };

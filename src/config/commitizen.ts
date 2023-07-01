@@ -28,7 +28,7 @@ module.exports = {
   ],
 
   // Область. Она характеризует фрагмент кода, которую затронули изменения
-  scopes: [{ name: 'auth' }, { name: 'common' }, { name: 'project' }, { name: 'config' }, { name: 'service' }, { name: 'controller' }, { name: 'repository' }],
+  scopes: [{ name: 'auth' }, { name: 'common' }, { name: 'project' }, { name: 'config' }, { name: 'service' }, { name: 'controller' }, { name: 'repository' }, { name: 'middleware' }],
 
   // Поменяем дефолтные вопросы
   messages: {
