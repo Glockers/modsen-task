@@ -6,7 +6,8 @@ import { IUserDTO, IUserJWT, TCreateUserDTO } from '../modules';
 import { appConfig } from '../config';
 import { httpStatus } from '../common/types';
 import { authService } from './auth.service';
-import { extractRefreshToken } from './strategies/refresh.strategy';
+import { extractTokenFromCookies } from './strategies/jwt.strategy';
+import { JwtStrategyType } from '../common/types/strategy.enum';
 
 class AuthController {
   public signUpController = catchAsyncFunction(async (req: TValidatePayload<TCreateUserDTO>, res: Response) => {
@@ -25,7 +26,7 @@ class AuthController {
   });
 
   public refreshAccessToken = catchAsyncFunction(async (req: Request, res: Response, next: NextFunction) => {
-    const token = extractRefreshToken(req);
+    const token = extractTokenFromCookies(req, JwtStrategyType.REFRESH_JWT_STRATEGY);
     const decoded = authService.verifyJWTToken(token, 'refresh');
     const user: IUserJWT = { login: decoded.login, role: decoded.role };
     res.cookie('jwt_tokens', user, {

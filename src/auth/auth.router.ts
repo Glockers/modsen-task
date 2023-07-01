@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { authenticate, checkAuth, validateLogInDTO, validateRegInDTO } from '../common/middleware';
 import { EAuthMessageError } from '../common/types/authMessageError';
-import { JWTStrategy } from '../common/types/strategy.enum';
+import { JwtStrategyType } from '../common/types/strategy.enum';
 import { authController } from './auth.controller';
 
 const authRouter = Router();
@@ -71,7 +71,7 @@ authRouter.post('/signup', validateRegInDTO(), checkAuth(false, 'Вы уже а�
   *       500:
   *        description: Internal server error
 */
-authRouter.post('/refresh-tokens', authenticate(JWTStrategy.REFRESH_JWT_STRATEGY, EAuthMessageError.INVALID_REFRESH_TOKEN), authController.refreshAccessToken);
+authRouter.post('/refresh-tokens', authenticate(JwtStrategyType.REFRESH_JWT_STRATEGY, EAuthMessageError.INVALID_REFRESH_TOKEN), authController.refreshAccessToken);
 
 /**
   * @openapi
@@ -88,6 +88,6 @@ authRouter.post('/refresh-tokens', authenticate(JWTStrategy.REFRESH_JWT_STRATEGY
   *       500:
   *        description: Internal server error
 */
-authRouter.post('/logout', authenticate(JWTStrategy.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), authController.logOutController);
+authRouter.post('/logout', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), authController.logOutController);
 
 export { authRouter };

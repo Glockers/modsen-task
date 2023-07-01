@@ -4,11 +4,12 @@ import { IUserJWT } from '..';
 import { catchAsyncFunction } from '../../common/helpers/catchAsync';
 import { httpStatus } from '../../common/types';
 import { userService } from './user.service';
-import { authService, extractAccessToken } from '../../auth';
+import { authService, extractTokenFromCookies } from '../../auth';
+import { JwtStrategyType } from '../../common/types/strategy.enum';
 
 export class UserController {
   public getProfileController = catchAsyncFunction(async (req: Request, res: Response, next: NextFunction) => {
-    const token = extractAccessToken(req);
+    const token = extractTokenFromCookies(req, JwtStrategyType.ACCESS_JWT_STRATEGY);
     const decoded = authService.verifyJWTToken(token, 'access');
     console.log(decoded);
     const user: IUserJWT = { login: decoded.login, role: decoded.role };

@@ -5,7 +5,7 @@ import { validateQueryParams } from '../../common/utils';
 import { idNumberSchema } from '../../common/schemas';
 import { Role } from '../../common/types';
 import { EAuthMessageError } from '../../common/types/authMessageError';
-import { JWTStrategy } from '../../common/types/strategy.enum';
+import { JwtStrategyType } from '../../common/types/strategy.enum';
 
 const meetupRouter = Router();
 
@@ -73,7 +73,7 @@ meetupRouter.get('/:id', validateQueryParams(idNumberSchema), meetupControoler.g
   *       400:
   *        description: Bad request
 */
-meetupRouter.post('/', authenticate(JWTStrategy.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), hasRole([Role.USER]), createMeetupValidationMiddleware(), meetupControoler.create);
+meetupRouter.post('/', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), hasRole([Role.USER]), createMeetupValidationMiddleware(), meetupControoler.create);
 
 /**
   * @openapi
@@ -102,7 +102,7 @@ meetupRouter.post('/', authenticate(JWTStrategy.ACCESS_JWT_STRATEGY, EAuthMessag
   *       400:
   *        description: Bad request
 */
-meetupRouter.put('/:id', authenticate(JWTStrategy.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), updateMeetupValidationMiddleware(), meetupControoler.updateById);
+meetupRouter.put('/:id', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), updateMeetupValidationMiddleware(), meetupControoler.updateById);
 
 /**
   * @openapi
@@ -125,6 +125,6 @@ meetupRouter.put('/:id', authenticate(JWTStrategy.ACCESS_JWT_STRATEGY, EAuthMess
   *       400:
   *        description: Bad request
 */
-meetupRouter.delete('/:id', authenticate(JWTStrategy.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), meetupControoler.deleteById);
+meetupRouter.delete('/:id', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), meetupControoler.deleteById);
 
 export { meetupRouter };
