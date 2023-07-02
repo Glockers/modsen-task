@@ -3,32 +3,33 @@
 module.exports = {
   // Добавим описание на русском языке ко всем типам
   types: [
-    {
-      value: 'build',
-      name: 'build:     Сборка проекта или изменения внешних зависимостей'
-    },
-    { value: 'ci', name: 'ci:        Настройка CI и работа со скриптами' },
-    { value: 'docs', name: 'docs:      Обновление документации' },
     { value: 'feat', name: 'feat:      Добавление нового функционала' },
-    { value: 'fix', name: 'fix:       Исправление ошибок' },
-    {
-      value: 'perf',
-      name: 'perf:      Изменения направленные на улучшение производительности'
-    },
+    { value: 'update', name: 'update:    Обновление функционала' },
     {
       value: 'refactor',
       name: 'refactor:  Правки кода без исправления ошибок или добавления новых функций'
     },
-    { value: 'revert', name: 'revert:    Откат на предыдущие коммиты' },
+    { value: 'fix', name: 'fix:       Исправление ошибок' },
+    { value: 'config', name: 'config:    Обновление конфигурации' },
     {
       value: 'style',
       name: 'style:     Правки по кодстайлу (табы, отступы, точки, запятые и т.д.)'
+    },
+    { value: 'revert', name: 'revert:    Откат на предыдущие коммиты' },
+    { value: 'docs', name: 'docs:      Обновление документации' },
+    {
+      value: 'build',
+      name: 'build:     Сборка проекта или изменения внешних зависимостей'
+    },
+    {
+      value: 'perf',
+      name: 'perf:      Изменения направленные на улучшение производительности'
     },
     { value: 'test', name: 'test:      Добавление тестов' }
   ],
 
   // Область. Она характеризует фрагмент кода, которую затронули изменения
-  scopes: [{ name: 'auth' }, { name: 'common' }, { name: 'project' }, { name: 'config' }, { name: 'service' }, { name: 'controller' }, { name: 'repository' }, { name: 'middleware' }],
+  scopes: [{ name: 'auth' }, { name: 'modules' }, { name: 'common' }, { name: 'project' }, { name: 'config' }, { name: 'service' }, { name: 'controller' }, { name: 'repository' }, { name: 'middleware' }],
 
   // Поменяем дефолтные вопросы
   messages: {
