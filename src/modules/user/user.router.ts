@@ -4,6 +4,10 @@ import { EAuthMessageError } from '../../common/types/authMessageError';
 import { JwtStrategyType } from '../../common/types/strategy.enum';
 import Container from 'typedi';
 import { UserController } from './user.controller';
+import { hasRole } from '../../common/middleware';
+import { Role } from '../../common/types';
+import { validateQueryParams } from '../../common/utils';
+import { loginUserSchema } from './schemas/user.schema';
 
 const userRouter = Router();
 const userController = Container.get(UserController);
@@ -19,6 +23,12 @@ const userController = Container.get(UserController);
   *       200:
   *         description: App is up and running
 */
-userRouter.get('/profile', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), userController.getProfileController);
+userRouter.get('/profile', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), userController.getProfile);
+
+userRouter.get('/my-meetups', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), userController.getMyMeetups);
+
+userRouter.delete('/delete/:login', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), hasRole([Role.USER]), validateQueryParams(loginUserSchema), userController.deleteUser);
+
+userRouter.get('/users', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), hasRole([Role.ADMIN]), userController.getUsers);
 
 export { userRouter };

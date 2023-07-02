@@ -16,6 +16,19 @@ export class MeetupRegistrationRepository {
     return this.repository.save(registration);
   };
 
+  public getMeetupRegistrationsByUser = async (userLogin: string): Promise<Array<IMeetupRegistration>> => {
+    return this.repository.find({
+      where: {
+        user: {
+          login: userLogin
+        }
+      },
+      relations: {
+        meetup: true
+      }
+    });
+  };
+
   public getAllmeetupRegistration = async (): Promise<Array<IMeetupRegistration>> => {
     return this.repository.find({
       select: {

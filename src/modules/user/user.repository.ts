@@ -1,7 +1,8 @@
 import { Repository } from 'typeorm';
-import { IUserAttributes, IUserInput, User } from '..';
 import { PostgresDataSource } from '../../infra/db/postgres';
 import { Service } from 'typedi';
+import { IUserAttributes, IUserInput } from './interfaces';
+import { User } from './entities/user.entity';
 
 @Service()
 export class UserRepository {
@@ -11,17 +12,23 @@ export class UserRepository {
     this.repository = PostgresDataSource.getRepository(User);
   }
 
-  public createUser = async (user: IUserInput): Promise<IUserAttributes> => {
+  public create = async (user: IUserInput): Promise<IUserAttributes> => {
     return this.repository.save(user);
   };
 
-  public findUserByLogin = async (login: string): Promise<IUserAttributes | null> => {
+  public findByLogin = async (login: string): Promise<IUserAttributes | null> => {
     const selectedUser = this.repository.findOneBy({
       login
     });
-
     if (!selectedUser) return null;
-
     return selectedUser;
+  };
+
+  public getAll = async (): Promise<User[]> => {
+    return this.repository.find();
+  };
+
+  public remove = async (user: IUserAttributes): Promise<IUserAttributes> => {
+    return this.repository.remove(user);
   };
 }

@@ -1,12 +1,11 @@
 import { Schema } from 'joi';
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
 import { AppError } from '../exceptions';
+import { BodyRequestType, extractDataFromBody } from './exctractorRequest';
 
-export type TValidatePayload<T> = Request & { validatedPayload?: T }
-
-export function validateDTO<TPayload extends object>(schema: Schema<TPayload>, isEmpty = false) {
-  return function validateMiddleware(req: TValidatePayload<TPayload>, res: Response, next: NextFunction) {
-    const payload: TPayload = req.body;
+export function validateDTO<T extends object>(schema: Schema<T>, isEmpty = false) {
+  return function validateMiddleware(req: BodyRequestType<T>, res: Response, next: NextFunction) {
+    const payload = extractDataFromBody<T>(req);
     if (!isEmpty && !payload) {
       next(AppError.BadRequest('Ничего не введено'));
     }
@@ -16,7 +15,6 @@ export function validateDTO<TPayload extends object>(schema: Schema<TPayload>, i
       const errorMessage = errorMessages.join(', ');
       next(AppError.BadRequest(`validation: ${errorMessage}`));
     } else {
-      req.validatedPayload = validationResult.value;
       next();
     }
   };

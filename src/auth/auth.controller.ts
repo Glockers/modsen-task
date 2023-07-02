@@ -1,27 +1,27 @@
 import { NextFunction, Request, Response } from 'express';
 import { catchAsyncFunction } from '../common/helpers/catchAsync';
-import { TValidatePayload } from '../common/utils';
-import { IUserDTO, IUserJWT, TCreateUserDTO } from '../modules';
 import { appConfig } from '../config';
 import { httpStatus } from '../common/types';
 import { extractTokenFromCookies } from './strategies/jwt.strategy';
 import { JwtStrategyType } from '../common/types/strategy.enum';
 import { Inject, Service } from 'typedi';
 import { AuthService } from './auth.service';
+import { IAuthCredentialsDTO, IUserJWT, TCreateUserDTO } from '../modules/user/interfaces';
+import { extractDataFromBody } from '../common/utils/exctractorRequest';
 
 @Service()
 export class AuthController {
   @Inject()
   private authService: AuthService;
 
-  public signUpController = catchAsyncFunction(async (req: TValidatePayload<TCreateUserDTO>, res: Response) => {
-    const validationPayload = req.validatedPayload;
+  public signUpController = catchAsyncFunction(async (req: Request, res: Response) => {
+    const validationPayload = extractDataFromBody<TCreateUserDTO>(req);
     const registedUser = await this.authService.signUp(validationPayload);
     res.status(httpStatus.CREATED).json(registedUser);
   });
 
-  public loginController = catchAsyncFunction(async (req: TValidatePayload<IUserDTO>, res: Response) => {
-    const validationPayload = req.validatedPayload;
+  public loginController = catchAsyncFunction(async (req: Request, res: Response) => {
+    const validationPayload = extractDataFromBody<IAuthCredentialsDTO>(req);
     const tokens = await this.authService.logIn(validationPayload);
     res.cookie('jwt_tokens', tokens, {
       httpOnly: true,

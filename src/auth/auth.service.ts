@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { IAuthCredentialsDTO, IUserAttributes, IUserInput, IUserJWT, TCreateUserDTO } from '../modules';
 import { Role } from '../common/types';
 import { AppError } from '../common/exceptions';
 import { jwtConfig } from '../config';
@@ -8,6 +7,7 @@ import { ITokenPair } from './interfaces/token.inteface';
 import { EAuthMessageError } from '../common/types/authMessageError';
 import { Inject, Service } from 'typedi';
 import { UserRepository } from '../modules/user/user.repository';
+import { IAuthCredentialsDTO, IUserAttributes, IUserInput, IUserJWT, TCreateUserDTO } from '../modules/user/interfaces';
 
 @Service()
 export class AuthService {
@@ -15,7 +15,7 @@ export class AuthService {
   private userRepository: UserRepository;
 
   public signUp = async (payload: TCreateUserDTO): Promise<IUserAttributes> => {
-    const selectedUser = await this.userRepository.findUserByLogin(payload.login);
+    const selectedUser = await this.userRepository.findByLogin(payload.login);
     if (selectedUser) {
       throw AppError.ConflictError('such user already exists');
     }
@@ -26,11 +26,11 @@ export class AuthService {
       role: Role.USER
     };
 
-    return this.userRepository.createUser(newUser);
+    return this.userRepository.create(newUser);
   };
 
   public logIn = async (payload: IAuthCredentialsDTO): Promise<ITokenPair> => {
-    const selectedUser = await this.userRepository.findUserByLogin(payload.login);
+    const selectedUser = await this.userRepository.findByLogin(payload.login);
     if (!selectedUser || selectedUser.password !== payload.password) {
       throw AppError.Unauthorized('Invalid login or password');
     }
@@ -50,7 +50,7 @@ export class AuthService {
   }
 
   public validateJWTToken = (payload: IAuthCredentialsDTO, done: VerifiedCallback): void => {
-    if (this.userRepository.findUserByLogin(payload.login)) {
+    if (this.userRepository.findByLogin(payload.login)) {
       done(null, payload);
     } else {
       done(EAuthMessageError.UNAUTHORIZED, false);
@@ -58,7 +58,6 @@ export class AuthService {
   };
 
   public verifyJWTToken(token: string, type: 'access' | 'refresh'): IUserJWT | null {
-    console.log(this.userRepository);
     try {
       const data = jwt.verify(token, type === 'access' ? jwtConfig.JWT_ACCESS_SECRET : jwtConfig.JWT_REFRESH_SECRET) as IUserJWT;
       return data;

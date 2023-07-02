@@ -2,7 +2,8 @@ import { CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn
 import { IMeetupRegistration } from '../interfaces/meetupRegistration.interface';
 import { Meetup } from '../../meetup/entities/meetup.entity';
 import { IMeetupAttributes } from '../../meetup/interfaces';
-import { User, IUserAttributes } from '../../user';
+import { User } from '../../user/entities/user.entity';
+import { IUserAttributes } from '../../user/interfaces';
 
 @Entity('meetup_registrations')
 class MeetupRegistation implements IMeetupRegistration {

@@ -1,5 +1,5 @@
 import { IMeetupAttributes } from '../../meetup/interfaces';
-import { IUserAttributes } from '../../user';
+import { IUserAttributes } from '../../user/interfaces';
 
 export interface IMeetupRegistration {
   id: number;

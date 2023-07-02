@@ -8,7 +8,7 @@ import Container from 'typedi';
 
 const authService = Container.get(AuthService);
 
-export function extractTokenFromCookies(req: Request, typeStrategy: JwtStrategyType): string | null {
+export function extractTokenFromCookies(req: Request<unknown, any, any, any>, typeStrategy: JwtStrategyType): string | null {
   const tokens: ITokenPair | undefined = req.cookies?.jwt_tokens;
   if (req && tokens) {
     return typeStrategy === JwtStrategyType.ACCESS_JWT_STRATEGY ? tokens.accessToken : tokens.refreshToken;

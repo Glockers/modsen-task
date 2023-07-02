@@ -2,10 +2,10 @@ import { userLoginSchema, userSignUpSchema } from '../../auth/schemas/auth.schem
 import { RequestHandler } from 'express';
 import passport from 'passport';
 import { validateDTO } from '../utils';
-import { IAuthCredentialsDTO, TCreateUserDTO } from '../../modules';
 import { httpStatus } from '../types';
 import { EAuthMessageError } from '../types/authMessageError';
 import { JwtStrategyType } from '../types/strategy.enum';
+import { IAuthCredentialsDTO, TCreateUserDTO } from '../../modules/user/interfaces';
 
 export function validateLogInDTO() {
   return validateDTO<IAuthCredentialsDTO>(userLoginSchema);

@@ -29,7 +29,7 @@ const meetupRegistrationController = Container.get(MeetupRegistrationController)
   *       200:
   *         description: App is up and running
 */
-registerMeetupRouter.post('/:id', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), validateQueryParams(idNumberSchema), meetupRegistrationController.registerUserForMeetupController);
+registerMeetupRouter.post('/:id', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), validateQueryParams(idNumberSchema), meetupRegistrationController.registerUserOnMeetup);
 
 /**
   * @openapi
@@ -42,6 +42,6 @@ registerMeetupRouter.post('/:id', authenticate(JwtStrategyType.ACCESS_JWT_STRATE
   *       200:
   *         description: App is up and running
 */
-registerMeetupRouter.get('/', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), meetupRegistrationController.getAllRegisterOnMeetup);
+registerMeetupRouter.get('/', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), meetupRegistrationController.getRegistrationsOnMeetup);
 
 export { registerMeetupRouter };

@@ -1,7 +1,7 @@
 import { Schema } from 'joi';
 import { AppError } from '../exceptions';
 
-export function validateConfig<T>(shema: Schema<T>) {
+export function validateConfig<T>(shema: Schema<T>): T {
   const config = shema.validate(process.env);
 
   if (config.error) {
