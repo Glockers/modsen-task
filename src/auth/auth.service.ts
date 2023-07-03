@@ -3,21 +3,22 @@ import { Role } from '../common/types';
 import { AppError } from '../common/exceptions';
 import { jwtConfig } from '../config';
 import { VerifiedCallback } from 'passport-jwt';
-import { ITokenPair } from './interfaces/token.inteface';
+import { ITokenPair } from './interfaces/jwt.interface';
 import { EAuthMessageError } from '../common/types/authMessageError';
 import { Inject, Service } from 'typedi';
 import { UserRepository } from '../modules/user/user.repository';
 import { IAuthCredentialsDTO, IUserAttributes, IUserInput, IUserJWT, TCreateUserDTO } from '../modules/user/interfaces';
+import { ERROR_INVALID_LOGIN_PASSWORD, ERROR_USER_EXISTS } from './constants/message';
 
 @Service()
 export class AuthService {
   @Inject()
-  private userRepository: UserRepository;
+  private readonly userRepository: UserRepository;
 
   public signUp = async (payload: TCreateUserDTO): Promise<IUserAttributes> => {
     const selectedUser = await this.userRepository.findByLogin(payload.login);
     if (selectedUser) {
-      throw AppError.ConflictError('such user already exists');
+      throw AppError.ConflictError(ERROR_USER_EXISTS);
     }
     const newUser: IUserInput = {
       name: payload.name,
@@ -32,7 +33,7 @@ export class AuthService {
   public logIn = async (payload: IAuthCredentialsDTO): Promise<ITokenPair> => {
     const selectedUser = await this.userRepository.findByLogin(payload.login);
     if (!selectedUser || selectedUser.password !== payload.password) {
-      throw AppError.Unauthorized('Invalid login or password');
+      throw AppError.Unauthorized(ERROR_INVALID_LOGIN_PASSWORD);
     }
     const userJWT: IUserJWT = {
       login: payload.login,

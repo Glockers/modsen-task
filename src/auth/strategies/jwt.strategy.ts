@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { Strategy as JwtStrategy, StrategyOptions } from 'passport-jwt';
 import { jwtConfig } from '../../config/jwt.config';
-import { ITokenPair } from '../interfaces/token.inteface';
+import { ITokenPair } from '../interfaces/jwt.interface';
 import { JwtStrategyType } from '../../common/types/strategy.enum';
 import { AuthService } from '../auth.service';
 import Container from 'typedi';

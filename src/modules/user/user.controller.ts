@@ -9,6 +9,7 @@ import { IUserJWT } from './interfaces';
 import { AppError } from '../../common/exceptions';
 import { LoginUserRequest } from './interfaces/request.interface';
 import { extractDataFromParams } from '../../common/utils/exctractorRequest';
+import { ERROR_CANNOT_DELETE_SELF } from './constants/message';
 
 @Service()
 export class UserController {
@@ -43,7 +44,7 @@ export class UserController {
     const session = this.authService.verifyJWTToken(extractTokenFromCookies(req, JwtStrategyType.ACCESS_JWT_STRATEGY), 'access');
 
     if (login === session.login) {
-      throw AppError.ConflictError('Вы не можете удалить самого себя');
+      throw AppError.ConflictError(ERROR_CANNOT_DELETE_SELF);
     };
 
     const myMeetups = await this.userService.deleteByLogin(login);

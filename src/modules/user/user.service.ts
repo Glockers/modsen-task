@@ -15,7 +15,7 @@ export class UserService {
   private readonly meetupRegistrationRepository: MeetupRegistrationRepository;
 
   public getProfile = async (user: IUserJWT): Promise<IUserAttributes> => {
-    if (!user) throw AppError.BadRequest('User не указан');
+    if (!user) throw AppError.BadRequest(USER_NOT_FOUND);
     return this.getUserByLogin(user.login);
   };
 

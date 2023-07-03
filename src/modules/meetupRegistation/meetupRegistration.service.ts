@@ -6,6 +6,8 @@ import { MeetupRepository } from '../meetup/meetup.repository';
 import { UserRepository } from '../user/user.repository';
 import { MeetupRegistrationRepository } from './meetupRegistration.repository';
 import { IUserJWT } from '../user/interfaces';
+import { ERROR_ALREADY_REGISTERED } from './constants/message';
+import { MEETUP_NOT_FOUND_MESSAGE } from '../meetup/constants/message.constant';
 
 @Service()
 export class MeetupRegistrationService {
@@ -31,11 +33,11 @@ export class MeetupRegistrationService {
     const selectedUser = await this.userRepository.findByLogin(user.login);
     const meetup = await this.meetupRepository.getMeetupById(meetupId);
     if (!selectedUser || !meetup) {
-      throw AppError.NotFound('Meetup not found');
+      throw AppError.NotFound(MEETUP_NOT_FOUND_MESSAGE);
     }
     const userMeetups = await this.meetupRegistrationRepository.getMeetupRegistrationsByUser(user.login);
 
-    if (this.hasRegisteredMeetup(userMeetups, meetupId)) throw AppError.ConflictError('Вы уже записаны на этот meetup');
+    if (this.hasRegisteredMeetup(userMeetups, meetupId)) throw AppError.ConflictError(ERROR_ALREADY_REGISTERED);
 
     const registration = new MeetupRegistation();
     registration.user = selectedUser;

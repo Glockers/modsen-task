@@ -8,7 +8,7 @@ import { MeetupRepository } from './meetup.repository';
 @Service()
 export class MeetupService {
   @Inject()
-  public meetupRepository: MeetupRepository;
+  public readonly meetupRepository: MeetupRepository;
 
   public async create(payload: IMeetupInput): Promise<IMeetupAttributes> {
     const createdMeetup = await this.meetupRepository.create(payload);

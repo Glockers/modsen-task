@@ -8,11 +8,13 @@ import { Inject, Service } from 'typedi';
 import { AuthService } from './auth.service';
 import { IAuthCredentialsDTO, IUserJWT, TCreateUserDTO } from '../modules/user/interfaces';
 import { extractDataFromBody } from '../common/utils/exctractorRequest';
+import { COOKIE_JWT_TOKENS } from './interfaces/jwt.interface';
+import { MESSAGE_LOGGED_OUT_SUCCESSFULLY } from './constants/message';
 
 @Service()
 export class AuthController {
   @Inject()
-  private authService: AuthService;
+  private readonly authService: AuthService;
 
   public signUpController = catchAsyncFunction(async (req: Request, res: Response) => {
     const validationPayload = extractDataFromBody<TCreateUserDTO>(req);
@@ -23,7 +25,7 @@ export class AuthController {
   public loginController = catchAsyncFunction(async (req: Request, res: Response) => {
     const validationPayload = extractDataFromBody<IAuthCredentialsDTO>(req);
     const tokens = await this.authService.logIn(validationPayload);
-    res.cookie('jwt_tokens', tokens, {
+    res.cookie(COOKIE_JWT_TOKENS, tokens, {
       httpOnly: true,
       secure: appConfig.APP_NODE_ENV === 'production'
     }).sendStatus(httpStatus.NO_CONTENT);
@@ -33,14 +35,14 @@ export class AuthController {
     const token = extractTokenFromCookies(req, JwtStrategyType.REFRESH_JWT_STRATEGY);
     const decoded = this.authService.verifyJWTToken(token, 'refresh');
     const user: IUserJWT = { login: decoded.login, role: decoded.role };
-    res.cookie('jwt_tokens', user, {
+    res.cookie(COOKIE_JWT_TOKENS, user, {
       httpOnly: true,
       secure: appConfig.APP_NODE_ENV === 'production'
     }).sendStatus(httpStatus.NO_CONTENT);
   });
 
   public logOutController = catchAsyncFunction(async (req: Request, res: Response, next: NextFunction) => {
-    res.clearCookie('jwt_tokens');
-    res.status(httpStatus.OK).json({ message: 'User logged out successfully' });
+    res.clearCookie(COOKIE_JWT_TOKENS);
+    res.status(httpStatus.OK).json({ message: MESSAGE_LOGGED_OUT_SUCCESSFULLY });
   });
 }
