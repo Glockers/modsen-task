@@ -26,8 +26,12 @@ const meetupRegistrationController = Container.get(MeetupRegistrationController)
   *         minimum: 0
   *       description: ID of the meetup
   *     responses:
-  *       200:
-  *         description: App is up and running
+  *       204:
+  *         description: Subscribe on meetup
+  *       401:
+  *        description: Unauthorized
+  *       500:
+  *        description: Internal server error
 */
 registerMeetupRouter.post('/:id', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), validateQueryParams(idNumberSchema), meetupRegistrationController.registerUserOnMeetup);
 
@@ -40,7 +44,11 @@ registerMeetupRouter.post('/:id', authenticate(JwtStrategyType.ACCESS_JWT_STRATE
   *     description: Get all subscribs
   *     responses:
   *       200:
-  *         description: App is up and running
+  *         description: Get all subscribs
+  *       401:
+  *        description: Unauthorized
+  *       500:
+  *        description: Internal server error
 */
 registerMeetupRouter.get('/', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), meetupRegistrationController.getRegistrationsOnMeetup);
 

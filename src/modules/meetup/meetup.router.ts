@@ -30,6 +30,8 @@ const meetupControoler = Container.get(MeetupController);
   *         description: Success
   *       400:
   *        description: Bad request
+  *       500:
+  *        description: Internal server error
 */
 meetupRouter.get('/', filterMeetupValidationMiddleware(), meetupControoler.getAll);
 
@@ -53,6 +55,8 @@ meetupRouter.get('/', filterMeetupValidationMiddleware(), meetupControoler.getAl
   *         description: Success
   *       400:
   *        description: Bad request
+  *       500:
+  *        description: Internal server error
 */
 meetupRouter.get('/:id', validateQueryParams(idNumberSchema), meetupControoler.getOneById);
 
@@ -70,10 +74,16 @@ meetupRouter.get('/:id', validateQueryParams(idNumberSchema), meetupControoler.g
   *           schema:
   *             $ref: '#/components/schemas/CreateMeetupSchema'
   *     responses:
-  *       201:
+  *       204:
   *         description: Success
   *       400:
   *        description: Bad request
+  *       401:
+  *        description: Unauthorized
+  *       403:
+  *        description: Forbidden
+  *       500:
+  *        description: Internal server error
 */
 meetupRouter.post('/', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), hasRole([Role.ADMIN]), createMeetupValidationMiddleware(), meetupControoler.create);
 
@@ -103,6 +113,12 @@ meetupRouter.post('/', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMe
   *         description: Success
   *       400:
   *        description: Bad request
+  *       401:
+  *        description: Unauthorized
+  *       403:
+  *        description: Forbidden
+  *       500:
+  *        description: Internal server error
 */
 meetupRouter.put('/:id', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), updateMeetupValidationMiddleware(), meetupControoler.updateById);
 
@@ -126,6 +142,12 @@ meetupRouter.put('/:id', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuth
   *         description: Success
   *       400:
   *        description: Bad request
+  *       401:
+  *        description: Unauthorized
+  *       403:
+  *        description: Forbidden
+  *       500:
+  *        description: Internal server error
 */
 meetupRouter.delete('/:id', authenticate(JwtStrategyType.ACCESS_JWT_STRATEGY, EAuthMessageError.UNAUTHORIZED), hasRole([Role.ADMIN]), validateQueryParams(idNumberSchema), meetupControoler.deleteById);
 

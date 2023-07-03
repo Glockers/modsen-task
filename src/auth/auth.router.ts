@@ -47,7 +47,7 @@ authRouter.post('/login', validateLogInDTO(), checkAuth(false, 'Вы уже ав
   *           schema:
   *             $ref: '#/components/schema/userSignUpSchema'
   *     responses:
-  *       200:
+  *       204:
   *         description: success
   *       409:
   *        description: such user already exists
@@ -67,7 +67,7 @@ authRouter.post('/signup', validateRegInDTO(), checkAuth(false, 'Вы уже а�
   *     description: refresh token
   *     responses:
   *       200:
-  *         description: App is up and running
+  *         description: success
   *       401:
   *         description: Unauthorized
   *       500:
@@ -84,7 +84,7 @@ authRouter.post('/refresh-tokens', authenticate(JwtStrategyType.REFRESH_JWT_STRA
   *     description: logout
   *     responses:
   *       200:
-  *         description: App is up and running
+  *         description: logout from system
   *       401:
   *        description: Unauthorized
   *       500:

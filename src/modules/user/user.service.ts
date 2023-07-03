@@ -25,7 +25,7 @@ export class UserService {
     return myRegistrations;
   };
 
-  public getAllUsers = async () => {
+  public getAllUsers = async (): Promise<IUserAttributes[]> => {
     return this.userRepository.getAll();
   };
 
