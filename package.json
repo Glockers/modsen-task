@@ -6,8 +6,7 @@
   "scripts": {
     "prebuild": "npm run lint",
     "build": "rimraf dist && tsc",
-    "prestart": "tsc --project tsconfig.json",
-    "start": "cross-env APP_NODE_ENV=production node .",
+    "start": "node .",
     "server:watch": "cross-env APP_NODE_ENV=development ts-node-dev --respawn --transpile-only src/server.ts",
     "dev": "docker-compose up",
     "lint": "eslint --cache --ext .ts .",

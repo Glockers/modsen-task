@@ -2,7 +2,7 @@
 
 ## Deploy
 
-The project is available at: [Click](https://modsen-task.vercel.app/)
+The project is available at: [Click](https://modsen-task-production.up.railway.app/)
 
 # Useful scripts
 
