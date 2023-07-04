@@ -5,8 +5,8 @@ import { createLogger } from './common/utils';
 
 const logger = createLogger(__filename);
 
-const server = app.listen(appConfig.APP_PORT, () => {
-  logger.info(`Server is running at ${appConfig.APP_HOST}:${appConfig.APP_PORT}`);
+const server = app.listen(appConfig.PORT, () => {
+  logger.info(`Server is running at ${appConfig.APP_HOST} on PORT: ${appConfig.PORT}`);
 });
 
 process.on('unhandledRejection', (err: Error) => {

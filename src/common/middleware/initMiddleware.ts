@@ -8,7 +8,7 @@ import { AppError } from '../exceptions';
 
 export const initMiddlewares = (app: Application): void => {
   app.use(passport.initialize());
-  swaggerDocs(app, appConfig.APP_PORT);
+  swaggerDocs(app, appConfig.PORT);
 
   app.all('*', (req, res, next) => {
     next(AppError.NotFound(`Cant find ${req.originalUrl} on this server!`));
