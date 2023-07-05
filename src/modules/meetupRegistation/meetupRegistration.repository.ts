@@ -1,7 +1,7 @@
 import { Service } from 'typedi';
 import { IMeetupRegistration } from '.';
 import { MeetupRegistation } from './entities/meetupRegistation.entity';
-import { PostgresDataSource } from '../../infra/db/postgres';
+import { PostgresDataSource } from '../../providers/db/postgres';
 import { Repository } from 'typeorm';
 
 @Service()

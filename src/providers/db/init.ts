@@ -4,7 +4,7 @@ import { PostgresDataSource } from './postgres';
 
 const logger = createLogger(__filename);
 
-export async function checkPostgressConnection() {
+export async function checkPostgressConnection(): Promise<void> {
   try {
     await PostgresDataSource.initialize();
     logger.info('Connection has been established successfully.');

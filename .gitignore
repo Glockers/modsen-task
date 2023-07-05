@@ -10,3 +10,4 @@ node_modules
 /dist
 /local_pgdata
 .env.docker
+.idea

@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import express, { Application } from 'express';
 import { useRoutes } from './common/routes/initRoutes';
-import { checkPostgressConnection as initDatabase } from './infra';
+import { checkPostgressConnection as initDatabase } from './providers';
 import { initMiddlewares } from './common/middleware/initMiddleware';
 import cors from 'cors';
 import bodyParser from 'body-parser';

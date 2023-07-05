@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { PostgresDataSource } from '../../infra/db/postgres';
+import { PostgresDataSource } from '../../providers/db/postgres';
 import { Service } from 'typedi';
 import { IUserAttributes, IUserInput } from './interfaces';
 import { User } from './entities/user.entity';
