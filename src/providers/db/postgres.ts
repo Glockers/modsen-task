@@ -11,5 +11,7 @@ export const PostgresDataSource = new DataSource({
   database: typeormConfig.TYPEORM_DATABASE,
   logging: typeormConfig.TYPEORM_LOGGING,
   synchronize: typeormConfig.TYPEORM_SYNCHRONIZE,
-  entities: appConfig.APP_NODE_ENV === 'production' ? typeormConfig.productionEntityPath : typeormConfig.developEntityPath
+  entities: appConfig.APP_NODE_ENV === 'production' ? typeormConfig.productionEntityPath : typeormConfig.developEntityPath,
+  migrations: typeormConfig.migrationsPath,
+  migrationsTableName: typeormConfig.migrationsTableName
 });

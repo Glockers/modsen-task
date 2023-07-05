@@ -2,7 +2,7 @@
   "name": "modsen-test",
   "version": "1.0.0",
   "description": "meetup",
-  "main": "dist/src/server.js",
+  "main": "dist/server.js",
   "scripts": {
     "prebuild": "npm run lint",
     "build": "rimraf dist && tsc",
@@ -10,7 +10,12 @@
     "server:watch": "cross-env APP_NODE_ENV=development ts-node-dev --respawn --transpile-only src/server.ts",
     "dev": "docker-compose up",
     "lint": "eslint --cache --ext .ts .",
-    "lint:fix": "eslint --cache --ext .ts . --fix"
+    "lint:fix": "eslint --cache --ext .ts . --fix",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
+    "migration:create": "npm run typeorm -- migration:create src/database/migrations/%npm_config_name%",
+    "migration:generate": "npm run typeorm -- -d src/providers/db/postgres.ts migration:generate src/database/migrations/%npm_config_name%",
+    "migration:run": "npm run typeorm migration:run -- -d src/providers/db/postgres.ts",
+    "migration:down": "npm run typeorm -- -d src/providers/db/postgres.ts migration:revert"
   },
   "keywords": [],
   "author": "",

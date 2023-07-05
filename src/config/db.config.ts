@@ -12,7 +12,9 @@ interface IPostgreConfig {
   TYPEORM_LOGGING: boolean,
 }
 const productionEntityPath = ['dist/**/*.entity.js'];
-const developEntityPath = ['src/**/*.entity.js'];
+const developEntityPath = ['src/**/*.entity.ts'];
+const migrationsPath = ['src/database/migrations/*{.ts,.js}'];
+const migrationsTableName = 'migrations';
 
 const validationSchema = Joi.object({
   TYPEORM_DATABASE: Joi.string().required(),
@@ -25,4 +27,4 @@ const validationSchema = Joi.object({
   TYPEORM_CONNECTION: Joi.string().default('postgres').required()
 }).unknown();
 
-export const typeormConfig = { ...validateConfig<IPostgreConfig>(validationSchema), productionEntityPath, developEntityPath };
+export const typeormConfig = { ...validateConfig<IPostgreConfig>(validationSchema), productionEntityPath, developEntityPath, migrationsPath, migrationsTableName };
