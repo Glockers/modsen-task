@@ -1,8 +1,9 @@
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import { typeormConfig } from '../../config/db.config';
 import { appConfig } from '../../config';
+import { SeederOptions } from 'typeorm-extension';
 
-export const PostgresDataSource = new DataSource({
+const options: DataSourceOptions & SeederOptions = {
   type: typeormConfig.TYPEORM_CONNECTION,
   host: typeormConfig.TYPEORM_HOST,
   port: typeormConfig.TYPEORM_PORT,
@@ -13,5 +14,9 @@ export const PostgresDataSource = new DataSource({
   synchronize: typeormConfig.TYPEORM_SYNCHRONIZE,
   entities: appConfig.APP_NODE_ENV === 'production' ? typeormConfig.productionEntityPath : typeormConfig.developEntityPath,
   migrations: typeormConfig.migrationsPath,
-  migrationsTableName: typeormConfig.migrationsTableName
-});
+  migrationsTableName: typeormConfig.migrationsTableName,
+  factories: typeormConfig.factories,
+  seeds: typeormConfig.seeds
+};
+
+export const PostgresDataSource = new DataSource(options);
