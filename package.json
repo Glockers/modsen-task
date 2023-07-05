@@ -37,10 +37,10 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.3",
     "typedi": "^0.10.0",
-    "typeorm": "^0.3.16"
+    "typeorm": "^0.3.16",
+    "typeorm-extension": "^2.8.1"
   },
   "devDependencies": {
-    "typeorm-extension": "^2.8.1",
     "@faker-js/faker": "^8.0.2",
     "@types/body-parser": "^1.19.2",
     "@types/cookie-parser": "^1.4.3",
