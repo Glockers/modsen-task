@@ -1,15 +1,19 @@
-import { AppError } from '../../common/exceptions/AppError';
+
+import { AppError } from '../../common/exceptions';
 import { createLogger } from '../../common/utils';
 import { PostgresDataSource } from './postgres';
 
 const logger = createLogger(__filename);
 
-export async function checkPostgressConnection(): Promise<void> {
-  try {
-    await PostgresDataSource.initialize();
-    logger.info('Connection has been established successfully.');
-  } catch (error) {
-    logger.error('Unable to connect to the database:', error);
+async function checkPostgressConnection(): Promise<void> {
+  await PostgresDataSource.initialize();
+  logger.info('Connection has been established successfully.');
+}
+
+export function initDatabase(startServer: Function): void {
+  checkPostgressConnection().then(() => {
+    startServer();
+  }).catch((error) => {
     throw AppError.InternalServerError(`Unable to connect to the database: ${error}`);
-  }
+  });
 }

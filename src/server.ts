@@ -22,3 +22,5 @@ process.on('SIGTERM', () => {
     logger.error('Process terminated...');
   });
 });
+
+export { server };
