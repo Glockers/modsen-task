@@ -1,6 +1,5 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { typeormConfig } from '../../config/db.config';
-import { appConfig } from '../../config';
+import { appConfig, typeormConfig } from '../../config';
 import { SeederOptions } from 'typeorm-extension';
 
 const options: DataSourceOptions & SeederOptions = {

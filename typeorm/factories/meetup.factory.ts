@@ -1,6 +1,6 @@
 import { Faker } from '@faker-js/faker';
 import { setSeederFactory } from 'typeorm-extension';
-import { Meetup } from '../../modules/meetup/entities/meetup.entity';
+import { Meetup } from '../../src/modules/meetup/entities/meetup.entity';
 
 export const MeetupFactory = setSeederFactory(Meetup, (faker: Faker) => {
   const meetup = new Meetup();

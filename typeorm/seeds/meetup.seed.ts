@@ -1,6 +1,6 @@
 import { Seeder, SeederFactoryManager } from 'typeorm-extension';
 import { DataSource } from 'typeorm';
-import { Meetup } from '../../modules/meetup/entities/meetup.entity';
+import { Meetup } from '../../src/modules/meetup/entities/meetup.entity';
 
 export class MeetupSeeder implements Seeder {
   public async run(

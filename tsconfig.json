@@ -12,6 +12,5 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "lib": ["ES2020"],
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"]
 }

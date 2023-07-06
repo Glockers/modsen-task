@@ -1,4 +1,4 @@
-import { PostgresDataSource } from '../../providers/db/postgres';
+import { PostgresDataSource } from '../../infra/db/postgres';
 import { Like, Repository } from 'typeorm';
 import { Meetup } from './entities/meetup.entity';
 import { IMeetupAttributes, IMeetupInput, TFilterMeetupsDTO } from './interfaces';
