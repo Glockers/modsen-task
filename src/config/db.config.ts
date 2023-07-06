@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { validateConfig } from '../common/utils';
+import { validateConfig } from '../common/utils/validateConfig';
 
 interface IPostgreConfig {
   TYPEORM_HOST: string,

@@ -12,10 +12,10 @@ const options: DataSourceOptions & SeederOptions = {
   logging: typeormConfig.TYPEORM_LOGGING,
   synchronize: typeormConfig.TYPEORM_SYNCHRONIZE,
   entities: appConfig.APP_NODE_ENV === 'production' ? typeormConfig.productionEntityPath : typeormConfig.developEntityPath,
-  migrations: typeormConfig.migrationsPath,
-  migrationsTableName: typeormConfig.migrationsTableName,
-  factories: typeormConfig.factories,
-  seeds: typeormConfig.seeds
+  migrations: appConfig.APP_NODE_ENV === 'production' ? [] : typeormConfig.migrationsPath,
+  migrationsTableName: appConfig.APP_NODE_ENV === 'production' ? undefined : typeormConfig.migrationsTableName,
+  factories: appConfig.APP_NODE_ENV === 'production' ? [] : typeormConfig.factories,
+  seeds: appConfig.APP_NODE_ENV === 'production' ? [] : typeormConfig.seeds
 };
 
 export const PostgresDataSource = new DataSource(options);

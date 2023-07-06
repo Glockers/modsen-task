@@ -10,7 +10,7 @@ const server = bootstrap().listen(appConfig.PORT, () => {
 });
 
 process.on('unhandledRejection', (err: Error) => {
-  logger.error({ name: err.name, message: err.message }, 'UNHANDLED REJECTION! 💥 Shutting down...');
+  logger.error({ name: err.name, message: err.message, stackTrace: err.stack }, 'UNHANDLED REJECTION! 💥 Shutting down...');
   server.close(() => {
     process.exit(1);
   });
@@ -22,4 +22,5 @@ process.on('SIGTERM', () => {
     logger.error('Process terminated...');
   });
 });
+
 export { server };
