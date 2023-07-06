@@ -1,5 +1,5 @@
 import { Seeder, SeederFactoryManager } from 'typeorm-extension';
-import { User } from '../../modules/user/entities/user.entity';
+import { User } from '../../src/modules/user/entities/user.entity';
 import { DataSource } from 'typeorm';
 
 export class UserSeeder implements Seeder {

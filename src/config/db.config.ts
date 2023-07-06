@@ -1,9 +1,5 @@
 import Joi from 'joi';
-import { validateConfig } from '../common/utils/validateConfig';
-import { UsersFactory } from '../database/factories/user.factory';
-import { MeetupFactory } from '../database/factories/meetup.factory';
-import { UserSeeder } from '../database/seeds/user.seed';
-import { MeetupSeeder } from '../database/seeds/meetup.seed';
+import { validateConfig } from '../common/utils';
 
 interface IPostgreConfig {
   TYPEORM_HOST: string,
@@ -17,10 +13,10 @@ interface IPostgreConfig {
 }
 const productionEntityPath = ['dist/**/*.entity.js'];
 const developEntityPath = ['src/**/*.entity.ts'];
-const migrationsPath = ['src/database/migrations/*{.ts,.js}'];
+const migrationsPath = ['typeorm/migrations/*{.ts,.js}'];
 const migrationsTableName = 'migrations';
-const factories = [UsersFactory, MeetupFactory];
-const seeds = [UserSeeder, MeetupSeeder];
+const factories = ['typeorm/factories/*.ts'];
+const seeds = ['typeorm/seeds/*.ts'];
 
 const validationSchema = Joi.object({
   TYPEORM_DATABASE: Joi.string().required(),
